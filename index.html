@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///C:/Users/idycw/Downloads/home-upgrade-planner.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Upgrade Planner — Australia</title>
+<style>
+  :root{
+    --bg:#0E1A26;
+    --bg-panel:#14263A;
+    --bg-card:#182C42;
+    --grid-line:rgba(255,255,255,0.045);
+    --ink:#EAF1F7;
+    --ink-muted:#93A7BC;
+    --ink-faint:#5D7690;
+    --amber:#E8A33D;
+    --amber-dim:rgba(232,163,61,0.15);
+    --teal:#4FD1AE;
+    --red:#E2685A;
+    --red-dim:rgba(226,104,90,0.14);
+    --border:rgba(255,255,255,0.09);
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --display: "Century Gothic", "Avenir Next", "Segoe UI", var(--sans);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    min-height:100vh;
+    line-height:1.5;
+  }
+  a{color:var(--teal);}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px;}
+
+  header.top{margin-bottom:36px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(28px,4vw,42px);
+    letter-spacing:-0.01em;
+    margin:0 0 10px;
+  }
+  .lede{color:var(--ink-muted); max-width:620px; font-size:15px; margin:0;}
+
+  .layout{display:grid; grid-template-columns:340px 1fr; gap:28px; align-items:start;}
+  @media (max-width:860px){ .layout{grid-template-columns:1fr;} }
+
+  .panel{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px;
+    position:sticky;
+    top:24px;
+  }
+  @media (max-width:860px){ .panel{position:static;} }
+
+  .panel h2{
+    font-family:var(--display);
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-muted);
+    margin:0 0 18px;
+  }
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;
+    font-size:13px;
+    color:var(--ink-muted);
+    margin-bottom:6px;
+  }
+  .field input, .field select{
+    width:100%;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--ink);
+    font-family:var(--mono);
+    font-size:14px;
+    padding:9px 10px;
+  }
+  .field input:focus, .field select:focus, details summary:focus{
+    outline:2px solid var(--amber);
+    outline-offset:1px;
+  }
+  .field .unit{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-top:4px;
+  }
+  .checkfield{display:flex; align-items:center; gap:8px; margin-bottom:14px;}
+  .checkfield input{width:auto;}
+  .checkfield label{font-size:13px; color:var(--ink-muted); margin:0;}
+
+  details.assumptions{
+    margin-top:24px;
+    border-top:1px dashed var(--border);
+    padding-top:16px;
+  }
+  details.assumptions summary{
+    cursor:pointer;
+    font-size:13px;
+    color:var(--amber);
+    font-family:var(--mono);
+    letter-spacing:0.02em;
+  }
+  .assump-grid{margin-top:14px;}
+  .assump-grid .field label{font-size:12px;}
+  .assump-grid .field input{font-size:13px; padding:7px 9px;}
+  .verified-note{
+    font-size:11.5px;
+    color:var(--ink-faint);
+    font-family:var(--mono);
+    margin-top:14px;
+    line-height:1.5;
+  }
+
+  /* Report column */
+  .report-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
+  .report-head h2{
+    font-family:var(--display);
+    font-size:18px;
+    margin:0;
+  }
+  .budget-readout{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--ink-muted);
+  }
+  .budget-readout b{color:var(--ink);}
+
+  .stack{position:relative; padding-left:36px;}
+  .stack::before{
+    content:"";
+    position:absolute;
+    left:11px; top:6px; bottom:6px;
+    width:2px;
+    background:repeating-linear-gradient(to bottom, var(--border) 0 6px, transparent 6px 12px);
+  }
+  .card{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px 22px;
+    margin-bottom:16px;
+  }
+  .node{
+    position:absolute;
+    left:-36px; top:22px;
+    width:24px; height:24px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--amber);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono);
+    font-size:12px; font-weight:600;
+    color:var(--amber);
+  }
+  .card.delay .node{border-color:var(--red); color:var(--red);}
+  .card.queued .node{border-color:var(--ink-faint); color:var(--ink-faint);}
+
+  .card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;}
+  .card-title{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:19px;
+    margin:0 0 4px;
+  }
+  .card-sub{font-size:13px; color:var(--ink-muted); margin:0;}
+  .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:4px 9px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .tag.priority{background:var(--amber-dim); color:var(--amber);}
+  .tag.delay{background:var(--red-dim); color:var(--red);}
+  .tag.queued{background:rgba(255,255,255,0.06); color:var(--ink-faint);}
+
+  .metrics{display:flex; gap:26px; margin-top:16px; flex-wrap:wrap;}
+  .metric .k{font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.06em; font-family:var(--mono);}
+  .metric .v{font-family:var(--mono); font-size:20px; margin-top:2px;}
+  .metric .v.pos{color:var(--teal);}
+  .metric .v.warn{color:var(--red);}
+
+  .rationale{
+    margin-top:14px;
+    font-size:13.5px;
+    color:var(--ink-muted);
+    border-top:1px solid var(--border);
+    padding-top:12px;
+  }
+  .empty{
+    color:var(--ink-muted);
+    font-size:14px;
+    padding:20px;
+    background:var(--bg-card);
+    border:1px dashed var(--border);
+    border-radius:12px;
+  }
+
+  footer{
+    margin-top:44px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+    font-size:12.5px;
+    color:var(--ink-faint);
+    line-height:1.7;
+  }
+  footer b{color:var(--ink-muted);}
+
+  @media (prefers-reduced-motion: no-preference){
+    .card{transition:transform .15s ease;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">Australia · Independent energy upgrade sequencing</p>
+    <h1>Home Upgrade Planner</h1>
+    <p class="lede">Enter your home's numbers to see which upgrades are worth doing first, which to skip for now, and why — using assumptions you can see and change. No installer links, no quotes, no commissions.</p>
+  </header>
+
+  <div class="layout">
+
+    <!-- INPUTS -->
+    <aside class="panel">
+      <h2>Your home</h2>
+
+      <div class="field">
+        <label for="state">State</label>
+        <select id="state">
+          <option value="QLD">Queensland</option>
+          <option value="NSW">New South Wales</option>
+          <option value="VIC">Victoria</option>
+          <option value="SA">South Australia</option>
+          <option value="WA">Western Australia</option>
+          <option value="TAS">Tasmania</option>
+          <option value="ACT">Australian Capital Territory</option>
+          <option value="NT">Northern Territory</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="bill">Annual electricity bill</label>
+        <input type="number" id="bill" value="2800" min="0" step="50">
+        <div class="unit">AUD per year</div>
+      </div>
+
+      <div class="checkfield">
+        <input type="checkbox" id="hasSolar">
+        <label for="hasSolar">I already have solar panels</label>
+      </div>
+      <div class="field" id="solarSizeField" style="display:none;">
+        <label for="solarSize">Existing solar system size</label>
+        <input type="number" id="solarSize" value="6.6" min="0" step="0.5">
+        <div class="unit">kW</div>
+      </div>
+
+      <div class="field">
+        <label for="hotWater">Hot water system</label>
+        <select id="hotWater">
+          <option value="gas">Gas</option>
+          <option value="electric">Electric (resistive)</option>
+          <option value="heatpump">Already a heat pump</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="budget">Upgrade budget</label>
+        <input type="number" id="budget" value="20000" min="0" step="500">
+        <div class="unit">AUD available to spend now</div>
+      </div>
+
+      <details class="assumptions" open="">
+        <summary>Assumptions used in this calculation</summary>
+        <div class="assump-grid">
+          <div class="field">
+            <label for="price">Electricity price</label>
+            <input type="number" id="price" value="0.32" step="0.01">
+            <div class="unit">$ / kWh</div>
+          </div>
+          <div class="field">
+            <label for="fit">Feed-in tariff</label>
+            <input type="number" id="fit" value="0.05" step="0.01">
+            <div class="unit">$ / kWh exported</div>
+          </div>
+          <div class="field">
+            <label for="solarCost">Solar install cost</label>
+            <input type="number" id="solarCost" value="1100" step="50">
+            <div class="unit">$ / kW, after STC rebate</div>
+          </div>
+          <div class="field">
+            <label for="selfCons">Self-consumption without battery</label>
+            <input type="number" id="selfCons" value="35" step="5">
+            <div class="unit">% of solar used on-site</div>
+          </div>
+          <div class="field">
+            <label for="battSize">Battery size assumed</label>
+            <input type="number" id="battSize" value="10" step="1">
+            <div class="unit">kWh</div>
+          </div>
+          <div class="field">
+            <label for="battCost">Battery install cost</label>
+            <input type="number" id="battCost" value="950" step="50">
+            <div class="unit">$ / kWh, after rebate</div>
+          </div>
+          <div class="field">
+            <label for="hpCost">Heat pump hot water cost</label>
+            <input type="number" id="hpCost" value="2600" step="100">
+            <div class="unit">$ installed, after STC</div>
+          </div>
+          <div class="field">
+            <label for="hpSavingsGas">Heat pump saving vs gas</label>
+            <input type="number" id="hpSavingsGas" value="700" step="50">
+            <div class="unit">$ / year</div>
+          </div>
+          <div class="field">
+            <label for="hpSavingsElec">Heat pump saving vs electric</label>
+            <input type="number" id="hpSavingsElec" value="500" step="50">
+            <div class="unit">$ / year</div>
+          </div>
+          <div class="field">
+            <label for="delayYears">Delay threshold</label>
+            <input type="number" id="delayYears" value="8" step="1">
+            <div class="unit">payback years — beyond this, marked "delay"</div>
+          </div>
+        </div>
+        <p class="verified-note">
+          Assumptions last checked: 5 July 2026. STC prices and state rebates change — review this panel roughly every 3 months. This tool never links to installers and earns nothing from what you buy.
+        </p>
+      </details>
+    </aside>
+
+    <!-- REPORT -->
+    <main>
+      <div class="report-head">
+        <h2>Your upgrade sequence</h2>
+        <div class="budget-readout">Allocated: <b id="spentReadout">$10,300</b> of <b id="budgetReadout">$20,000</b></div>
+      </div>
+
+      <div class="stack" id="priorityStack"><div class="card">
+      <div class="node">1</div>
+      <div class="card-top">
+        <div>
+          <p class="card-title">Priority 1 — Heat pump hot water</p>
+          <p class="card-sub">Replacing your gas system</p>
+        </div>
+        <span class="tag priority">Recommended now</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="k">Cost</div><div class="v">$2,600</div></div>
+        <div class="metric"><div class="k">Est. saving</div><div class="v pos">$700/yr</div></div>
+        <div class="metric"><div class="k">Payback</div><div class="v">3.7 yr</div></div>
+      </div>
+      <p class="rationale">Removes a gas appliance entirely. If timed to run on daytime solar, real-world savings are often higher than this estimate.</p>
+    </div><div class="card">
+      <div class="node">2</div>
+      <div class="card-top">
+        <div>
+          <p class="card-title">Priority 2 — Solar panels</p>
+          <p class="card-sub">7 kW system, sized to your usage</p>
+        </div>
+        <span class="tag priority">Recommended now</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="k">Cost</div><div class="v">$7,700</div></div>
+        <div class="metric"><div class="k">Est. saving</div><div class="v pos">$1,588/yr</div></div>
+        <div class="metric"><div class="k">Payback</div><div class="v">4.9 yr</div></div>
+      </div>
+      <p class="rationale">Estimated to generate 10,987 kWh/year. 35% used on-site at $0.32/kWh, the rest exported at $0.05/kWh feed-in tariff.</p>
+    </div></div>
+
+      <div id="delaySection"><div class="card delay" style="margin-top: 16px;">
+      <div class="node">–</div>
+      <div class="card-top">
+        <div>
+          <p class="card-title">Home battery — delay for now</p>
+          <p class="card-sub">10 kWh, sized to your solar export</p>
+        </div>
+        <span class="tag delay">Payback 11.7 yr</span>
+      </div>
+      <p class="rationale">Current economics don't justify this yet under your assumptions — payback is longer than your 8-year threshold. Review in 2–3 years, or sooner if prices fall.</p>
+    </div></div>
+
+    </main>
+  </div>
+
+  <footer>
+    <p><b>How this works:</b> each upgrade's cost and annual saving are estimated from the assumptions on the left, using typical solar yield for your state. Payback = cost ÷ annual saving. Upgrades are ranked fastest-payback first, filled against your budget in order. Anything past the delay threshold is flagged rather than ranked, regardless of budget.</p>
+    <p><b>Not yet included:</b> EV charging, insulation, double glazing, pool heating, rainwater tanks. These are on the roadmap — this is an early working version covering the three upgrades that interact most: solar, battery, and hot water.</p>
+    <p>This is a general estimate, not personal financial advice. Costs, rebates and STC prices vary — get 2–3 real quotes before deciding.</p>
+  </footer>
+
+</div>
+
+<script>
+const STATE_YIELD = { QLD:4.3, NSW:3.9, VIC:3.4, SA:4.1, WA:4.4, TAS:3.0, ACT:3.9, NT:4.6 };
+
+function $(id){ return document.getElementById(id); }
+function fmtMoney(n){ return '$' + Math.round(n).toLocaleString('en-AU'); }
+function fmtYears(n){ return n.toFixed(1) + ' yr'; }
+
+function getInputs(){
+  return {
+    state: $('state').value,
+    bill: parseFloat($('bill').value) || 0,
+    hasSolar: $('hasSolar').checked,
+    solarSize: parseFloat($('solarSize').value) || 0,
+    hotWater: $('hotWater').value,
+    budget: parseFloat($('budget').value) || 0,
+    price: parseFloat($('price').value) || 0.32,
+    fit: parseFloat($('fit').value) || 0.05,
+    solarCost: parseFloat($('solarCost').value) || 1100,
+    selfCons: (parseFloat($('selfCons').value) || 35) / 100,
+    battSize: parseFloat($('battSize').value) || 10,
+    battCost: parseFloat($('battCost').value) || 950,
+    hpCost: parseFloat($('hpCost').value) || 2600,
+    hpSavingsGas: parseFloat($('hpSavingsGas').value) || 700,
+    hpSavingsElec: parseFloat($('hpSavingsElec').value) || 500,
+    delayYears: parseFloat($('delayYears').value) || 8,
+  };
+}
+
+function calculate(inp){
+  const yieldKw = STATE_YIELD[inp.state];
+  const dailyUsage = inp.bill / inp.price / 365;
+  const options = [];
+  let exportedForBattery = 0;
+  let solarInstalledSize = 0;
+
+  // --- SOLAR ---
+  if(!inp.hasSolar){
+    let sizeKw = (dailyUsage / yieldKw) * 1.3;
+    sizeKw = Math.min(Math.max(Math.round(sizeKw*2)/2, 3), 10);
+    const cost = sizeKw * inp.solarCost;
+    const genAnnual = sizeKw * yieldKw * 365;
+    const selfConsumed = Math.min(genAnnual * inp.selfCons, dailyUsage*365);
+    const exported = genAnnual - selfConsumed;
+    const savings = selfConsumed*inp.price + exported*inp.fit;
+    const payback = cost/savings;
+    options.push({
+      id:'solar', name:'Solar panels', sub:`${sizeKw} kW system, sized to your usage`,
+      cost, savings, payback,
+      rationale:`Estimated to generate ${Math.round(genAnnual).toLocaleString()} kWh/year. ${Math.round(inp.selfCons*100)}% used on-site at $${inp.price.toFixed(2)}/kWh, the rest exported at $${inp.fit.toFixed(2)}/kWh feed-in tariff.`
+    });
+    exportedForBattery = exported;
+    solarInstalledSize = sizeKw;
+  } else {
+    solarInstalledSize = inp.solarSize;
+    const genAnnual = inp.solarSize * yieldKw * 365;
+    exportedForBattery = genAnnual * (1 - inp.selfCons);
+  }
+
+  // --- BATTERY ---
+  if(solarInstalledSize > 0){
+    const battCost = inp.battSize * inp.battCost;
+    const shiftable = Math.min(exportedForBattery, inp.battSize * 300);
+    const extraSavings = shiftable * (inp.price - inp.fit);
+    const payback = extraSavings > 0 ? battCost/extraSavings : Infinity;
+    options.push({
+      id:'battery', name:'Home battery', sub:`${inp.battSize} kWh, sized to your solar export`,
+      cost: battCost, savings: extraSavings, payback,
+      rationale:`Only pays back once there's solar generating spare, exportable energy to store. Shifts roughly ${Math.round(shiftable).toLocaleString()} kWh/year from a ${inp.fit.toFixed(2)} feed-in credit to a $${inp.price.toFixed(2)} avoided purchase.`
+    });
+  }
+
+  // --- HEAT PUMP HOT WATER ---
+  if(inp.hotWater !== 'heatpump'){
+    const savings = inp.hotWater === 'gas' ? inp.hpSavingsGas : inp.hpSavingsElec;
+    const payback = inp.hpCost/savings;
+    options.push({
+      id:'hotwater', name:'Heat pump hot water', sub:`Replacing your ${inp.hotWater === 'gas' ? 'gas' : 'electric resistive'} system`,
+      cost: inp.hpCost, savings, payback,
+      rationale: inp.hotWater === 'gas'
+        ? `Removes a gas appliance entirely. If timed to run on daytime solar, real-world savings are often higher than this estimate.`
+        : `Roughly 3–4× more efficient than a resistive electric tank for the same hot water.`
+    });
+  }
+
+  const delayThreshold = inp.delayYears;
+  const ranked = options.filter(o => o.payback <= delayThreshold).sort((a,b)=>a.payback-b.payback);
+  const delayed = options.filter(o => o.payback > delayThreshold);
+
+  let spent = 0;
+  ranked.forEach(o => {
+    o.overBudget = (spent + o.cost) > inp.budget;
+    spent += o.cost;
+  });
+
+  return { ranked, delayed, spent, hotWaterAlreadyEfficient: inp.hotWater === 'heatpump' };
+}
+
+function render(){
+  const inp = getInputs();
+  $('solarSizeField').style.display = inp.hasSolar ? 'block' : 'none';
+
+  const { ranked, delayed, spent, hotWaterAlreadyEfficient } = calculate(inp);
+
+  $('budgetReadout').textContent = fmtMoney(inp.budget);
+  $('spentReadout').textContent = fmtMoney(Math.min(spent, inp.budget));
+
+  const stack = $('priorityStack');
+  stack.innerHTML = '';
+
+  if(ranked.length === 0){
+    stack.innerHTML = '<div class="empty">No upgrades currently clear your delay threshold with a fast enough payback. Try raising the delay threshold in Assumptions, or check back as prices change.</div>';
+  }
+
+  ranked.forEach((o,i) => {
+    const card = document.createElement('div');
+    card.className = 'card' + (o.overBudget ? ' queued' : '');
+    card.innerHTML = `
+      <div class="node">${i+1}</div>
+      <div class="card-top">
+        <div>
+          <p class="card-title">Priority ${i+1} — ${o.name}</p>
+          <p class="card-sub">${o.sub}</p>
+        </div>
+        <span class="tag ${o.overBudget ? 'queued' : 'priority'}">${o.overBudget ? 'Over budget — next in queue' : 'Recommended now'}</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="k">Cost</div><div class="v">${fmtMoney(o.cost)}</div></div>
+        <div class="metric"><div class="k">Est. saving</div><div class="v pos">${fmtMoney(o.savings)}/yr</div></div>
+        <div class="metric"><div class="k">Payback</div><div class="v">${fmtYears(o.payback)}</div></div>
+      </div>
+      <p class="rationale">${o.rationale}</p>
+    `;
+    stack.appendChild(card);
+  });
+
+  const delaySection = $('delaySection');
+  delaySection.innerHTML = '';
+  if(hotWaterAlreadyEfficient){
+    const note = document.createElement('div');
+    note.className = 'empty';
+    note.style.marginTop = '16px';
+    note.textContent = 'Hot water: already a heat pump — no action needed here.';
+    delaySection.appendChild(note);
+  }
+  delayed.forEach(o => {
+    const card = document.createElement('div');
+    card.className = 'card delay';
+    card.style.marginTop = '16px';
+    card.innerHTML = `
+      <div class="node">–</div>
+      <div class="card-top">
+        <div>
+          <p class="card-title">${o.name} — delay for now</p>
+          <p class="card-sub">${o.sub}</p>
+        </div>
+        <span class="tag delay">Payback ${fmtYears(o.payback)}</span>
+      </div>
+      <p class="rationale">Current economics don't justify this yet under your assumptions — payback is longer than your ${inp.delayYears}-year threshold. Review in 2–3 years, or sooner if prices fall.</p>
+    `;
+    delaySection.appendChild(card);
+  });
+}
+
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('input', render);
+  el.addEventListener('change', render);
+});
+
+render();
+</script>
+
+
+</body></html>
