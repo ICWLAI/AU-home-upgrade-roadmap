@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0061)file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html -->
+<!-- saved from url=(0061)file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -557,6 +557,14 @@
     line-height:1.7;
   }
   footer b{color:var(--ink-muted);}
+  .guides{margin-top:18px; padding-top:16px; border-top:1px dashed var(--border);}
+  .guides-title{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ink-faint); font-family:var(--mono); margin-bottom:8px;
+  }
+  .guides ul{margin:0; padding-left:18px;}
+  .guides li{margin-bottom:4px;}
+  .guides a{color:var(--teal); font-size:12.5px;}
 
   @media (prefers-reduced-motion: no-preference){
     .card{transition:transform .15s ease;}
@@ -1015,13 +1023,13 @@
               <label for="price">Electricity price</label>
               <input type="number" id="price" value="0.32" step="0.01">
               <div class="unit">$ / kWh</div>
-              <div class="ref">Typical range 28–40c/kWh depending on state and retailer. <b>Source:</b> Solar Choice / industry price guides, July 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn1" class="fn-link">[1]</a></sup></div>
+              <div class="ref">Typical range 28–40c/kWh depending on state and retailer. <b>Source:</b> Solar Choice / industry price guides, July 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn1" class="fn-link">[1]</a></sup></div>
             </div>
             <div class="field">
               <label for="fit">Feed-in tariff</label>
               <input type="number" id="fit" value="0.05" step="0.01">
               <div class="unit">$ / kWh exported</div>
-              <div class="ref">Typical range 4–8c/kWh — several states' minimum mandated feed-in tariffs sit near this level. <b>Source:</b> industry price guides, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn2" class="fn-link">[2]</a></sup></div>
+              <div class="ref">Typical range 4–8c/kWh — several states' minimum mandated feed-in tariffs sit near this level. <b>Source:</b> industry price guides, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn2" class="fn-link">[2]</a></sup></div>
             </div>
             <div class="field">
               <label for="delayYears">Delay threshold</label>
@@ -1039,16 +1047,16 @@
               <label for="solarCost">Solar install cost</label>
               <input type="number" id="solarCost" value="900" step="50">
               <div class="unit">$ / kW installed, after STC rebate</div>
-              <div class="ref">Industry average $0.88–$0.95/watt installed after the federal STC discount (e.g. a 6.6kW system ≈ $5,000–$6,000). <b>Source:</b> Solar Choice Price Index, July 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn1" class="fn-link">[1]</a></sup></div>
+              <div class="ref">Industry average $0.88–$0.95/watt installed after the federal STC discount (e.g. a 6.6kW system ≈ $5,000–$6,000). <b>Source:</b> Solar Choice Price Index, July 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn1" class="fn-link">[1]</a></sup></div>
             </div>
             <div class="field">
               <label for="selfCons">Self-consumption without battery</label>
               <input type="number" id="selfCons" value="35" step="5">
               <div class="unit">% of solar used on-site</div>
-              <div class="ref">Typical households without a battery self-consume ~35% of solar generated; the rest is exported. <b>Source:</b> industry solar/battery analysis, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn2" class="fn-link">[2]</a></sup></div>
+              <div class="ref">Typical households without a battery self-consume ~35% of solar generated; the rest is exported. <b>Source:</b> industry solar/battery analysis, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn2" class="fn-link">[2]</a></sup></div>
             </div>
           </div>
-          <div class="ref" style="margin-top:2px;">The federal STC rebate itself (currently ≈ $37–$40 per certificate) is already built into the $/kW figure above — you don't need to add it separately. <b>Source:</b> Clean Energy Regulator / REC Registry, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn3" class="fn-link">[3]</a></sup></div>
+          <div class="ref" style="margin-top:2px;">The federal STC rebate itself (currently ≈ $37–$40 per certificate) is already built into the $/kW figure above — you don't need to add it separately. <b>Source:</b> Clean Energy Regulator / REC Registry, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn3" class="fn-link">[3]</a></sup></div>
         </div>
 
         <div class="assump-module">
@@ -1064,7 +1072,7 @@
               <label for="battCost">Battery install cost</label>
               <input type="number" id="battCost" value="950" step="50">
               <div class="unit">$ / kWh, after rebate</div>
-              <div class="ref">Typical range $800–$1,000/kWh installed after the ~30% federal Cheaper Home Batteries Program discount (in effect since 1 May 2026). <b>Source:</b> Solar Choice / industry price trackers, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn4" class="fn-link">[4]</a></sup><sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn5" class="fn-link">[5]</a></sup></div>
+              <div class="ref">Typical range $800–$1,000/kWh installed after the ~30% federal Cheaper Home Batteries Program discount (in effect since 1 May 2026). <b>Source:</b> Solar Choice / industry price trackers, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn4" class="fn-link">[4]</a></sup><sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn5" class="fn-link">[5]</a></sup></div>
             </div>
           </div>
         </div>
@@ -1076,13 +1084,13 @@
               <label for="hpCost">Heat pump hot water cost</label>
               <input type="number" id="hpCost" value="2300" step="100">
               <div class="unit">$ installed, after STC rebate</div>
-              <div class="ref">Typically $3,000–$4,000 before rebate; the STC rebate (~25 certificates, ≈$975) brings most installs to roughly $2,200–$2,500. State top-ups (VIC, NSW, QLD) can reduce this further. <b>Source:</b> industry heat pump cost guides, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn6" class="fn-link">[6]</a></sup></div>
+              <div class="ref">Typically $3,000–$4,000 before rebate; the STC rebate (~25 certificates, ≈$975) brings most installs to roughly $2,200–$2,500. State top-ups (VIC, NSW, QLD) can reduce this further. <b>Source:</b> industry heat pump cost guides, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn6" class="fn-link">[6]</a></sup></div>
             </div>
             <div class="field">
               <label for="gasRunningCost">Gas hot water running cost</label>
               <input type="number" id="gasRunningCost" value="750" step="50">
               <div class="unit">$ / year</div>
-              <div class="ref">Typical range $600–$900/yr. <b>Source:</b> industry running-cost comparisons, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn6" class="fn-link">[6]</a></sup></div>
+              <div class="ref">Typical range $600–$900/yr. <b>Source:</b> industry running-cost comparisons, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn6" class="fn-link">[6]</a></sup></div>
             </div>
             <div class="field">
               <label for="electricRunningCost">Electric resistive running cost</label>
@@ -1094,7 +1102,7 @@
               <label for="hpRunningCost">Heat pump running cost</label>
               <input type="number" id="hpRunningCost" value="275" step="25">
               <div class="unit">$ / year</div>
-              <div class="ref">Typical range $200–$350/yr on grid power — less if timed to run on daytime solar. <b>Source:</b> industry running-cost comparisons, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_16.html#fn6" class="fn-link">[6]</a></sup></div>
+              <div class="ref">Typical range $200–$350/yr on grid power — less if timed to run on daytime solar. <b>Source:</b> industry running-cost comparisons, 2026. <sup><a href="file:///C:/Users/idycw/Downloads/home-upgrade-planner_17.html#fn6" class="fn-link">[6]</a></sup></div>
             </div>
           </div>
         </div>
@@ -1122,6 +1130,13 @@
     <p><b>How this works:</b> each upgrade's cost and annual saving are estimated from the assumptions below, using typical solar yield for your state. Payback = cost ÷ annual saving. Upgrades are ranked fastest-payback first, filled against your budget in order. Anything past the delay threshold is flagged rather than ranked, regardless of budget.</p>
     <p><b>Not yet included:</b> EV charging, insulation, double glazing. These are on the roadmap — this is an early working version covering the three upgrades that interact most: solar, battery, and hot water.</p>
     <p>This tool models general assumptions against the numbers you enter — it does not consider your complete personal or financial circumstances, and nothing on this page is personal or general financial advice. Costs, rebates and STC prices vary — get 2–3 real quotes before deciding.</p>
+
+    <div class="guides">
+      <p class="guides-title">Guides</p>
+      <ul>
+        <li><a href="file:///C:/Users/idycw/Downloads/solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
+      </ul>
+    </div>
   </footer>
 
 </div>
