@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Upgrade Priorities on a $20,000 Budget (2026) | Australia Home Upgrade Roadmap</title>
+<meta name="description" content="What order should you tackle solar, battery, and heat pump hot water on a $20,000 budget? A sourced, worked example, plus a free independent calculator for your own numbers.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://au-home-upgrade-roadmap.vercel.app/20k-budget-priorities.html">
+<meta property="og:title" content="Home Upgrade Priorities on a $20,000 Budget">
+<meta property="og:description" content="What order to tackle solar, battery, and heat pump hot water on a $20,000 budget — a worked example, plus a free calculator.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8EMZWDQR7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M8EMZWDQR7');
+</script>
+<style>
+  :root{
+    --bg:#F6F8FA; --bg-panel:#FFFFFF; --bg-card:#FFFFFF;
+    --ink:#152233; --ink-muted:#57697D; --ink-faint:#8A97A6;
+    --amber:#B5790A; --teal:#0E7C6B; --red:#B3382C; --border:rgba(20,40,60,0.12);
+    --mono: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --display: "Century Gothic", "Avenir Next", "Segoe UI", var(--sans);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:48px 24px 80px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--amber); margin:0 0 12px;
+  }
+  h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(24px,4vw,36px); letter-spacing:-0.01em; margin:0 0 20px;
+  }
+  h2{
+    font-family:var(--display); font-weight:700; font-size:20px;
+    color:var(--ink); margin:36px 0 12px;
+  }
+  p{ color:var(--ink-muted); font-size:16px; margin:0 0 16px; }
+  .quick-answer{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin:24px 0 32px;
+  }
+  .quick-answer p{ color:var(--ink); font-size:17px; margin:0; }
+  .quick-answer b{ color:var(--teal); }
+  .roadmap{ margin:20px 0 8px; }
+  .step{
+    display:flex; gap:16px; align-items:flex-start;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .step .num{
+    font-family:var(--mono); font-weight:700; font-size:15px;
+    background:var(--amber); color:#14263A;
+    width:28px; height:28px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .step.skip .num{ background:var(--red); color:#fff; }
+  .step .body{ flex:1; }
+  .step .title{ font-weight:700; font-size:15px; margin-bottom:4px; }
+  .step .figs{ font-family:var(--mono); font-size:13px; color:var(--ink-faint); }
+  a{ color:var(--teal); }
+  .fn-link{ color:var(--teal); text-decoration:none; font-weight:600; font-size:0.85em; }
+  .fn-link:hover, .fn-link:focus{ text-decoration:underline; }
+  .cta{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:16px;
+    padding:32px 28px; text-align:center; margin:44px 0 32px;
+  }
+  .cta h2{ margin-top:0; }
+  .cta-button{
+    display:inline-block; margin-top:14px;
+    background:var(--amber); color:#14263A; text-decoration:none;
+    font-family:var(--display); font-weight:700; font-size:16px;
+    padding:14px 32px; border-radius:10px;
+  }
+  .cta p.sub{ font-size:13px; color:var(--ink-faint); margin-top:14px; }
+  .footnotes{ margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+  .footnotes-title{
+    font-family:var(--display); font-size:13px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-muted); margin-bottom:10px;
+  }
+  .footnotes ol{ margin:0; padding-left:20px; }
+  .footnotes li{ font-size:12px; color:var(--ink-faint); line-height:1.7; }
+  .footnotes li a{ color:var(--teal); word-break:break-all; }
+  footer{
+    margin-top:32px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12.5px; color:var(--ink-faint); line-height:1.7;
+  }
+  .ref{ font-size:12px; color:var(--ink-faint); margin-top:8px; }
+  .guides{margin-top:18px; padding-top:16px; border-top:1px dashed var(--border);}
+  .guides-title{font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); margin-bottom:8px;}
+  .guides ul{margin:0; padding-left:18px;}
+  .guides li{margin-bottom:4px;}
+  .guides a{color:var(--teal); font-size:12.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Australia · Home upgrade sequencing</p>
+  <h1>Home Upgrade Priorities on a $20,000 Budget</h1>
+
+  <div class="quick-answer">
+    <p><b>Short answer:</b> for most gas-hot-water households without existing solar, heat pump hot water first, solar second, and battery only if budget remains — because that order roughly matches fastest-to-slowest payback. But the right order depends entirely on your own numbers, which is the actual point of this page.</p>
+  </div>
+
+  <p>Almost nobody selling these upgrades will tell you the order matters — an installer profits the same whether you buy solar first or last. But sequencing genuinely changes the outcome: a battery installed before solar has nothing to store yet, and a $20,000 budget spent in the wrong order can leave the highest-value upgrade unfunded.</p>
+
+  <h2>A worked example</h2>
+  <p>Brisbane household, gas hot water, no existing solar, $2,800 annual bill, $20,000 budget:</p>
+
+  <div class="roadmap">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <div class="title">🚿 Heat pump hot water</div>
+        <div class="figs">Cost ~$2,300 · Saving ~$475/yr · Payback ~4.8 yrs</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <div class="title">☀ Solar (7.0 kW)</div>
+        <div class="figs">Cost ~$6,300 · Saving ~$1,590/yr · Payback ~4.0 yrs</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <div class="title">🔋 Home battery (10 kWh)</div>
+        <div class="figs">Cost ~$9,500 · Saving ~$1,290/yr · Payback ~7.4 yrs</div>
+      </div>
+    </div>
+  </div>
+  <p class="ref">Combined cost ~$18,100 — within the $20,000 budget, with headroom to spare. Figures use the same industry-sourced assumptions as the rest of this site<sup><a href="#fn1" class="fn-link">[1]</a></sup><sup><a href="#fn2" class="fn-link">[2]</a></sup><sup><a href="#fn3" class="fn-link">[3]</a></sup>.</p>
+
+  <h2>Why this order, specifically</h2>
+  <ul style="color:var(--ink-muted); padding-left:20px;">
+    <li style="margin-bottom:8px;"><b>Heat pump first</b> — cheapest upgrade here, and removing a gas appliance entirely is close to a guaranteed saving with little uncertainty</li>
+    <li style="margin-bottom:8px;"><b>Solar second</b> — the biggest single saving on the list, and installing it before a battery means there's actually spare export for a battery to use later</li>
+    <li style="margin-bottom:8px;"><b>Battery last</b> — genuinely the slowest payback of the three here; worth doing once budget allows, not worth prioritising ahead of the faster-paying upgrades</li>
+  </ul>
+
+  <h2>Why your own order might be completely different</h2>
+  <p>Change any one input and this ranking can flip. Already have solar? The battery moves up the list since there's already export to store. On a low daytime-usage household? Solar's payback lengthens and heat pump becomes relatively more attractive. Have access to free off-peak charging? Battery's payback can improve dramatically even with little solar. This is exactly why a generic "buy solar first" article can't replace a calculation using your own numbers.</p>
+
+  <div class="cta">
+    <h2>Get your own ranked roadmap</h2>
+    <p>Enter your bill, your budget, and what you already have — the free tool below ranks solar, battery, and heat pump hot water by your actual payback, and tells you honestly if something doesn't fit your budget yet.</p>
+    <a class="cta-button" href="https://au-home-upgrade-roadmap.vercel.app/">Model Your Own Home →</a>
+    <p class="sub">Independent — no installer links, no quotes collected, nothing sold.</p>
+  </div>
+
+  <div class="footnotes">
+    <div class="footnotes-title">Sources</div>
+    <ol>
+      <li id="fn1">Solar Choice Price Index, July 2026 — <a href="https://www.solarchoice.net.au/solar-panels/solar-power-system-prices/" target="_blank" rel="noopener noreferrer">solarchoice.net.au/solar-panels/solar-power-system-prices</a></li>
+      <li id="fn2">Ohm Equity — heat pump hot water cost guide, 2026 — <a href="https://ohmequity.com/calculator/heat-pump/" target="_blank" rel="noopener noreferrer">ohmequity.com/calculator/heat-pump</a></li>
+      <li id="fn3">DCCEEW / Why Solar battery price tracker — Cheaper Home Batteries Program, 2026 — <a href="https://www.whysolar.com.au/solutions/batteries/price-tracker" target="_blank" rel="noopener noreferrer">whysolar.com.au/solutions/batteries/price-tracker</a></li>
+    </ol>
+  </div>
+
+  <div class="guides">
+    <div class="guides-title">More guides</div>
+    <ul>
+      <li><a href="solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
+      <li><a href="heat-pump-payback.html">Heat pump hot water payback in Australia</a></li>
+      <li><a href="solar-vs-battery.html">Solar vs battery — which pays back faster?</a></li>
+      <li><a href="battery-2026.html">Should I install a home battery in 2026?</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>This is general information, not personal financial advice. Costs, rebates, and tariffs vary by household and location — get 2–3 real quotes before deciding. Figures on this page reflect industry-sourced assumptions current as of July 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>

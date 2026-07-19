@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Should I Install a Home Battery in 2026? | Australia Home Upgrade Roadmap</title>
+<meta name="description" content="A straight, sourced answer on whether a home battery is worth it in 2026, covering the federal rebate, real payback ranges, and a free independent calculator.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://au-home-upgrade-roadmap.vercel.app/battery-2026.html">
+<meta property="og:title" content="Should I Install a Home Battery in 2026?">
+<meta property="og:description" content="A sourced answer on home battery paybacks in 2026, plus a free independent calculator using your own numbers.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8EMZWDQR7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M8EMZWDQR7');
+</script>
+<style>
+  :root{
+    --bg:#F6F8FA; --bg-panel:#FFFFFF; --bg-card:#FFFFFF;
+    --ink:#152233; --ink-muted:#57697D; --ink-faint:#8A97A6;
+    --amber:#B5790A; --teal:#0E7C6B; --border:rgba(20,40,60,0.12);
+    --mono: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --display: "Century Gothic", "Avenir Next", "Segoe UI", var(--sans);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:48px 24px 80px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--amber); margin:0 0 12px;
+  }
+  h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(24px,4vw,36px); letter-spacing:-0.01em; margin:0 0 20px;
+  }
+  h2{
+    font-family:var(--display); font-weight:700; font-size:20px;
+    color:var(--ink); margin:36px 0 12px;
+  }
+  p{ color:var(--ink-muted); font-size:16px; margin:0 0 16px; }
+  .quick-answer{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin:24px 0 32px;
+  }
+  .quick-answer p{ color:var(--ink); font-size:17px; margin:0; }
+  .quick-answer b{ color:var(--teal); }
+  .fact-row{ display:flex; gap:20px; flex-wrap:wrap; margin:20px 0 8px; }
+  .fact{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+    padding:14px 18px; flex:1; min-width:140px;
+  }
+  .fact .k{ font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); }
+  .fact .v{ font-family:var(--mono); font-size:20px; color:var(--ink); margin-top:4px; }
+  .fact .v.pos{ color:var(--teal); }
+  .yes-no-row{ display:flex; gap:16px; flex-wrap:wrap; margin:16px 0 8px; }
+  .yesbox, .nobox{
+    border-radius:10px; padding:16px 18px; flex:1; min-width:220px;
+  }
+  .yesbox{ background:rgba(14,124,107,0.08); border:1px solid rgba(14,124,107,0.25); }
+  .nobox{ background:rgba(179,56,44,0.06); border:1px solid rgba(179,56,44,0.2); }
+  .yesbox .tag{ color:var(--teal); }
+  .nobox .tag{ color:#B3382C; }
+  .yes-no-row .tag{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase;
+    letter-spacing:0.05em; margin-bottom:8px; display:block; font-weight:700;
+  }
+  .yes-no-row ul{ margin:0; padding-left:18px; }
+  .yes-no-row li{ font-size:14px; margin-bottom:6px; }
+  a{ color:var(--teal); }
+  .fn-link{ color:var(--teal); text-decoration:none; font-weight:600; font-size:0.85em; }
+  .fn-link:hover, .fn-link:focus{ text-decoration:underline; }
+  .cta{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:16px;
+    padding:32px 28px; text-align:center; margin:44px 0 32px;
+  }
+  .cta h2{ margin-top:0; }
+  .cta-button{
+    display:inline-block; margin-top:14px;
+    background:var(--amber); color:#14263A; text-decoration:none;
+    font-family:var(--display); font-weight:700; font-size:16px;
+    padding:14px 32px; border-radius:10px;
+  }
+  .cta p.sub{ font-size:13px; color:var(--ink-faint); margin-top:14px; }
+  .footnotes{ margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+  .footnotes-title{
+    font-family:var(--display); font-size:13px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-muted); margin-bottom:10px;
+  }
+  .footnotes ol{ margin:0; padding-left:20px; }
+  .footnotes li{ font-size:12px; color:var(--ink-faint); line-height:1.7; }
+  .footnotes li a{ color:var(--teal); word-break:break-all; }
+  footer{
+    margin-top:32px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12.5px; color:var(--ink-faint); line-height:1.7;
+  }
+  .ref{ font-size:12px; color:var(--ink-faint); margin-top:8px; }
+  .guides{margin-top:18px; padding-top:16px; border-top:1px dashed var(--border);}
+  .guides-title{font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); margin-bottom:8px;}
+  .guides ul{margin:0; padding-left:18px;}
+  .guides li{margin-bottom:4px;}
+  .guides a{color:var(--teal); font-size:12.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Australia · Home batteries</p>
+  <h1>Should I Install a Home Battery in 2026?</h1>
+
+  <div class="quick-answer">
+    <p><b>Short answer:</b> better than a couple of years ago thanks to the new federal rebate, but still usually the slowest-paying-back upgrade on this site — typically 7–12+ years. It makes most sense if you already have solar generating spare export, or you're on a tariff that lets you charge cheaply from the grid.</p>
+  </div>
+
+  <h2>What changed in 2026</h2>
+  <p>The federal Cheaper Home Batteries Program, in effect since 1 May 2026, brings typical installed costs down to roughly $800–$1,000 per kWh — around a 30% discount versus pre-rebate pricing<sup><a href="#fn1" class="fn-link">[1]</a></sup>. That's a genuine improvement, but batteries remain a bigger upfront cost than solar or heat pump hot water for a smaller annual saving, so the payback stays comparatively long.</p>
+
+  <h2>A typical scenario</h2>
+  <div class="fact-row">
+    <div class="fact"><div class="k">Size</div><div class="v">10 kWh</div></div>
+    <div class="fact"><div class="k">Cost (after rebate)</div><div class="v">~$9,500</div></div>
+    <div class="fact"><div class="k">Typical saving</div><div class="v pos">~$1,000–1,300/yr</div></div>
+    <div class="fact"><div class="k">Payback</div><div class="v">~7–9.5 yrs</div></div>
+  </div>
+  <p class="ref">Based on shifting spare solar export from a ~5c/kWh feed-in tariff to a ~48c/kWh evening peak rate, capped by typical annual battery cycling<sup><a href="#fn2" class="fn-link">[2]</a></sup>.</p>
+
+  <h2>When it genuinely makes sense — and when it doesn't</h2>
+  <div class="yes-no-row">
+    <div class="yesbox">
+      <span class="tag">✓ Good fit</span>
+      <ul>
+        <li>You already have solar generating meaningful daily export</li>
+        <li>You're on a time-of-use tariff with a real peak/off-peak price gap</li>
+        <li>You have access to a genuinely cheap or free off-peak charging window</li>
+        <li>You value blackout backup enough to accept a longer payback</li>
+      </ul>
+    </div>
+    <div class="nobox">
+      <span class="tag">✕ Poor fit right now</span>
+      <ul>
+        <li>You have little or no solar, and no off-peak/free-period tariff</li>
+        <li>Your household uses most of its power during the day already</li>
+        <li>You haven't yet installed solar or a heat pump — both usually pay back faster</li>
+        <li>You're financing the purchase at a meaningful interest rate</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h2>Already have a battery? Check your real numbers</h2>
+    <p>The free tool below lets you enter your own actual monthly saving directly if you already own a battery — bypassing the generic assumptions entirely — or model a new one against your real bill and existing solar.</p>
+    <a class="cta-button" href="https://au-home-upgrade-roadmap.vercel.app/">Model Your Own Home →</a>
+    <p class="sub">Independent — no installer links, no quotes collected, nothing sold.</p>
+  </div>
+
+  <div class="footnotes">
+    <div class="footnotes-title">Sources</div>
+    <ol>
+      <li id="fn1">DCCEEW / Why Solar battery price tracker — Cheaper Home Batteries Program, effective 1 May 2026 — <a href="https://www.whysolar.com.au/solutions/batteries/price-tracker" target="_blank" rel="noopener noreferrer">whysolar.com.au/solutions/batteries/price-tracker</a></li>
+      <li id="fn2">Why Solar — electricity price guide, peak ~45–56c/kWh, feed-in tariffs ~3–10c/kWh, 2026 — <a href="https://www.whysolar.com.au/guides/electricity-prices-australia" target="_blank" rel="noopener noreferrer">whysolar.com.au/guides/electricity-prices-australia</a></li>
+    </ol>
+  </div>
+
+  <div class="guides">
+    <div class="guides-title">More guides</div>
+    <ul>
+      <li><a href="solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
+      <li><a href="heat-pump-payback.html">Heat pump hot water payback in Australia</a></li>
+      <li><a href="solar-vs-battery.html">Solar vs battery — which pays back faster?</a></li>
+      <li><a href="20k-budget-priorities.html">Home upgrade priorities on a $20,000 budget</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>This is general information, not personal financial advice. Costs, rebates, and tariffs vary by household and location — get 2–3 real quotes before deciding. Figures on this page reflect industry-sourced assumptions current as of July 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>

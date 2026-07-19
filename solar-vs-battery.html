@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar vs Battery: Which Pays Back Faster? (2026) | Australia Home Upgrade Roadmap</title>
+<meta name="description" content="A straight, sourced comparison of solar and battery payback speed in Australia — why they're not really competing choices, and a free calculator using your own numbers.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://au-home-upgrade-roadmap.vercel.app/solar-vs-battery.html">
+<meta property="og:title" content="Solar vs Battery: Which Pays Back Faster?">
+<meta property="og:description" content="A sourced comparison of solar and battery payback speed, plus a free independent calculator using your own numbers.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8EMZWDQR7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M8EMZWDQR7');
+</script>
+<style>
+  :root{
+    --bg:#F6F8FA; --bg-panel:#FFFFFF; --bg-card:#FFFFFF;
+    --ink:#152233; --ink-muted:#57697D; --ink-faint:#8A97A6;
+    --amber:#B5790A; --teal:#0E7C6B; --border:rgba(20,40,60,0.12);
+    --mono: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --display: "Century Gothic", "Avenir Next", "Segoe UI", var(--sans);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:48px 24px 80px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--amber); margin:0 0 12px;
+  }
+  h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(24px,4vw,36px); letter-spacing:-0.01em; margin:0 0 20px;
+  }
+  h2{
+    font-family:var(--display); font-weight:700; font-size:20px;
+    color:var(--ink); margin:36px 0 12px;
+  }
+  p{ color:var(--ink-muted); font-size:16px; margin:0 0 16px; }
+  .quick-answer{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin:24px 0 32px;
+  }
+  .quick-answer p{ color:var(--ink); font-size:17px; margin:0; }
+  .quick-answer b{ color:var(--teal); }
+  .compare-row{ display:flex; gap:16px; flex-wrap:wrap; margin:20px 0 8px; }
+  .compare{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+    padding:16px 18px; flex:1; min-width:220px;
+  }
+  .compare .tag{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--amber); margin-bottom:8px; display:block;
+  }
+  .fact-row{ display:flex; gap:20px; flex-wrap:wrap; margin:0; }
+  .fact{
+    background:var(--bg); border:1px solid var(--border); border-radius:10px;
+    padding:12px 14px; flex:1; min-width:100px;
+  }
+  .fact .k{ font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); }
+  .fact .v{ font-family:var(--mono); font-size:18px; color:var(--ink); margin-top:4px; }
+  .fact .v.pos{ color:var(--teal); }
+  ul{ color:var(--ink-muted); padding-left:20px; }
+  li{ margin-bottom:8px; }
+  a{ color:var(--teal); }
+  .fn-link{ color:var(--teal); text-decoration:none; font-weight:600; font-size:0.85em; }
+  .fn-link:hover, .fn-link:focus{ text-decoration:underline; }
+  .cta{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:16px;
+    padding:32px 28px; text-align:center; margin:44px 0 32px;
+  }
+  .cta h2{ margin-top:0; }
+  .cta-button{
+    display:inline-block; margin-top:14px;
+    background:var(--amber); color:#14263A; text-decoration:none;
+    font-family:var(--display); font-weight:700; font-size:16px;
+    padding:14px 32px; border-radius:10px;
+  }
+  .cta p.sub{ font-size:13px; color:var(--ink-faint); margin-top:14px; }
+  .footnotes{ margin-top:16px; padding-top:16px; border-top:1px solid var(--border); }
+  .footnotes-title{
+    font-family:var(--display); font-size:13px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-muted); margin-bottom:10px;
+  }
+  .footnotes ol{ margin:0; padding-left:20px; }
+  .footnotes li{ font-size:12px; color:var(--ink-faint); line-height:1.7; }
+  .footnotes li a{ color:var(--teal); word-break:break-all; }
+  footer{
+    margin-top:32px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12.5px; color:var(--ink-faint); line-height:1.7;
+  }
+  .ref{ font-size:12px; color:var(--ink-faint); margin-top:8px; }
+  .guides{margin-top:18px; padding-top:16px; border-top:1px dashed var(--border);}
+  .guides-title{font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); margin-bottom:8px;}
+  .guides ul{margin:0; padding-left:18px;}
+  .guides li{margin-bottom:4px;}
+  .guides a{color:var(--teal); font-size:12.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Australia · Solar & battery</p>
+  <h1>Solar vs Battery: Which Pays Back Faster?</h1>
+
+  <div class="quick-answer">
+    <p><b>Short answer:</b> solar almost always pays back faster — typically 4–7 years, versus 7–12+ years for a battery. They're not really competing choices; solar usually comes first, and a battery becomes worthwhile afterwards, once there's enough spare solar export to actually store.</p>
+  </div>
+
+  <p>It's tempting to think of these as two options to pick between. In practice they solve different problems, and the order you install them in changes the numbers significantly.</p>
+
+  <h2>Why solar is almost always faster</h2>
+  <p>Solar reduces the cost of <i>all</i> your daytime electricity use — not just a portion of it. A battery, on the other hand, only captures the price difference between what you'd otherwise export at a low feed-in tariff and what you'd otherwise pay at the evening peak rate. That's a real saving, but on a narrower slice of your energy — which is why it typically takes longer to pay back.</p>
+
+  <h2>A worked example</h2>
+  <p>For a Brisbane household with a $2,800 annual bill and no existing solar:</p>
+
+  <div class="compare-row">
+    <div class="compare">
+      <span class="tag">☀ Solar (7.0 kW)</span>
+      <div class="fact-row">
+        <div class="fact"><div class="k">Cost</div><div class="v">~$6,300</div></div>
+        <div class="fact"><div class="k">Saving</div><div class="v pos">~$1,590/yr</div></div>
+        <div class="fact"><div class="k">Payback</div><div class="v">~4.0 yrs</div></div>
+      </div>
+    </div>
+    <div class="compare">
+      <span class="tag">🔋 Battery (10 kWh, added after solar)</span>
+      <div class="fact-row">
+        <div class="fact"><div class="k">Cost</div><div class="v">~$9,500</div></div>
+        <div class="fact"><div class="k">Saving</div><div class="v pos">~$1,290/yr</div></div>
+        <div class="fact"><div class="k">Payback</div><div class="v">~7.4 yrs</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="ref">Battery saving is based on shifting spare solar export (capped by typical annual cycling) from a ~5c/kWh feed-in tariff to a ~48c/kWh evening peak rate<sup><a href="#fn1" class="fn-link">[1]</a></sup> — the same logic used throughout this site. Costs based on ~$900/kW solar and ~$950/kWh battery, both after current rebates<sup><a href="#fn2" class="fn-link">[2]</a></sup><sup><a href="#fn3" class="fn-link">[3]</a></sup>.</p>
+
+  <h2>When this changes</h2>
+  <ul>
+    <li><b>You're on a special off-peak or "free period" tariff</b> — some retailers let you charge a battery cheaply from the grid, not just from solar export. This can make a battery worthwhile even with little or no solar, though it needs a genuinely low off-peak rate to work</li>
+    <li><b>You already have solar</b> — the comparison above assumes installing solar first; if you already have it, the battery's payback depends entirely on how much you're currently exporting rather than using</li>
+    <li><b>You factor in financing costs</b> — if you're borrowing to fund either upgrade, or giving up investment returns on the cash, both paybacks stretch out, and the gap between them can widen further since the battery's smaller annual saving is more sensitive to this</li>
+  </ul>
+
+  <div class="cta">
+    <h2>See both, ranked for your actual numbers</h2>
+    <p>This page shows one example. The free tool below uses your real bill, your existing solar (if any), and your budget — and tells you honestly which order makes sense for you.</p>
+    <a class="cta-button" href="https://au-home-upgrade-roadmap.vercel.app/">Model Your Own Home →</a>
+    <p class="sub">Independent — no installer links, no quotes collected, nothing sold.</p>
+  </div>
+
+  <div class="footnotes">
+    <div class="footnotes-title">Sources</div>
+    <ol>
+      <li id="fn1">Why Solar — electricity price guide, peak ~45–56c/kWh and feed-in tariffs ~3–10c/kWh, 2026 — <a href="https://www.whysolar.com.au/guides/electricity-prices-australia" target="_blank" rel="noopener noreferrer">whysolar.com.au/guides/electricity-prices-australia</a></li>
+      <li id="fn2">Solar Choice Price Index, July 2026 — <a href="https://www.solarchoice.net.au/solar-panels/solar-power-system-prices/" target="_blank" rel="noopener noreferrer">solarchoice.net.au/solar-panels/solar-power-system-prices</a></li>
+      <li id="fn3">DCCEEW / Why Solar battery price tracker — Cheaper Home Batteries Program, 2026 — <a href="https://www.whysolar.com.au/solutions/batteries/price-tracker" target="_blank" rel="noopener noreferrer">whysolar.com.au/solutions/batteries/price-tracker</a></li>
+    </ol>
+  </div>
+
+  <div class="guides">
+    <div class="guides-title">More guides</div>
+    <ul>
+      <li><a href="solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
+      <li><a href="heat-pump-payback.html">Heat pump hot water payback in Australia</a></li>
+      <li><a href="battery-2026.html">Should I install a home battery in 2026?</a></li>
+      <li><a href="20k-budget-priorities.html">Home upgrade priorities on a $20,000 budget</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>This is general information, not personal financial advice. Costs, rebates, and tariffs vary by household and location — get 2–3 real quotes before deciding. Figures on this page reflect industry-sourced assumptions current as of July 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -706,6 +706,10 @@
         <input type="number" id="actualBatterySaving" value="75" min="0" step="5">
         <div class="unit">AUD/month — from your own bills, not modelled</div>
       </div>
+      <div class="checkfield" id="offPeakChargingField">
+        <input type="checkbox" id="chargeFromGrid">
+        <label for="chargeFromGrid">I'd also charge the battery from cheap off-peak/free grid power, not just solar</label>
+      </div>
 
       <div class="field">
         <label for="hotWater">Hot water system</label>
@@ -813,6 +817,12 @@
               <div class="unit">payback years — beyond this, marked "delay"</div>
               <div class="ref">This is a judgement call, not a market figure — 8 years is roughly half a battery/solar system's warrantied life. Adjust it to suit your own risk tolerance.</div>
             </div>
+            <div class="field">
+              <label for="financeRate">Cost of capital (optional)</label>
+              <input type="number" id="financeRate" value="4" step="0.5">
+              <div class="unit">% per year — set to 0 to ignore this entirely</div>
+              <div class="ref">Debatable by design — this represents either loan/green-loan interest if you'd finance the purchase, or the return you'd otherwise earn investing that cash instead. There's no single right number: someone using a mortgage offset, a low-interest green loan, or foregone term-deposit interest would each reasonably pick a different rate. Adjust to your own situation, or set to 0 to see the simple payback only.</div>
+            </div>
           </div>
         </div>
 
@@ -914,6 +924,9 @@
       <ul>
         <li><a href="solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
         <li><a href="heat-pump-payback.html">Heat pump hot water payback in Australia</a></li>
+        <li><a href="solar-vs-battery.html">Solar vs battery — which pays back faster?</a></li>
+        <li><a href="battery-2026.html">Should I install a home battery in 2026?</a></li>
+        <li><a href="20k-budget-priorities.html">Home upgrade priorities on a $20,000 budget</a></li>
       </ul>
     </div>
   </footer>
@@ -1008,6 +1021,15 @@ function buildDetailsHTML(o, inp){
         Your plan — stay ${inp.yearsStaying} years: <b>${o.stayVerdict.label}</b>
       </div>
 
+      ${inp.financeRate > 0 ? `
+      <div class="sens-label" style="margin-top:14px;">Sensitivity — cost of capital</div>
+      <div class="sens-row">
+        <div class="sens-item"><div class="sk">Simple payback</div><div class="sv">${fmtYears(o.payback)}</div></div>
+        <div class="sens-item"><div class="sk">Including ${inp.financeRate}%/yr cost of capital</div><div class="sv">${fmtYears(o.financePayback)}</div></div>
+      </div>
+      <p style="font-size:11.5px; color:var(--ink-faint); margin:0 0 10px;">This is one debatable way to account for financing or foregone investment returns — see Assumptions for the reasoning. Set the rate to 0 to ignore it.</p>
+      ` : ``}
+
       <div style="margin-top:12px; font-size:12.5px; color:var(--ink-muted); line-height:1.6;">
         <b style="color:var(--ink-faint); text-transform:uppercase; font-size:11px; letter-spacing:0.05em;">Most sensitive to:</b> ${o.keyAssumptions}<br>
         <b style="color:var(--ink-faint); text-transform:uppercase; font-size:11px; letter-spacing:0.05em;">To improve confidence:</b> ${o.improveConfidence}
@@ -1027,6 +1049,7 @@ function getInputs(){
     hasSolar: $('hasSolar').checked,
     hasBattery: $('hasBattery').checked,
     actualBatterySaving: parseFloat($('actualBatterySaving').value) || 0,
+    chargeFromGrid: $('chargeFromGrid').checked,
     assessSolar: $('assessSolar').checked,
     assessBattery: $('assessBattery').checked,
     assessHotwater: $('assessHotwater').checked,
@@ -1047,6 +1070,7 @@ function getInputs(){
     electricRunningCost: parseFloat($('electricRunningCost').value) || 900,
     hpRunningCost: parseFloat($('hpRunningCost').value) || 275,
     delayYears: parseFloat($('delayYears').value) || 8,
+    financeRate: parseFloat($('financeRate').value) || 0,
   };
 }
 
@@ -1115,22 +1139,28 @@ function calculate(inp){
         { label: 'Calculated annual saving', value: fmtMoney(extraSavings), highlight: true }
       ]
     });
-  } else if(inp.assessBattery && solarInstalledSize > 0){
+  } else if(inp.assessBattery && (solarInstalledSize > 0 || inp.chargeFromGrid)){
     const battCost = inp.battSize * inp.battCost;
-    const shiftable = Math.min(exportedForBattery, inp.battSize * 300);
+    const shiftable = inp.chargeFromGrid
+      ? inp.battSize * 300
+      : Math.min(exportedForBattery, inp.battSize * 300);
     const extraSavings = shiftable * (inp.peakPrice - inp.fit);
     const payback = extraSavings > 0 ? battCost/extraSavings : Infinity;
     const extraSavingsAtPriceUp = shiftable * ((inp.peakPrice*1.2) - inp.fit);
     const extraSavingsAtPriceDown = shiftable * ((inp.peakPrice*0.8) - inp.fit);
     options.push({
-      id:'battery', name:'Home battery', sub:`${inp.battSize} kWh, sized to your solar export`,
+      id:'battery', name:'Home battery', sub: inp.chargeFromGrid ? `${inp.battSize} kWh, charged from off-peak grid + solar` : `${inp.battSize} kWh, sized to your solar export`,
       cost: battCost, savings: extraSavings, payback,
       priceUpPayback: extraSavingsAtPriceUp > 0 ? battCost/extraSavingsAtPriceUp : Infinity,
       priceDownPayback: extraSavingsAtPriceDown > 0 ? battCost/extraSavingsAtPriceDown : Infinity,
-      rationale:`Only pays back once there's solar generating spare, exportable energy to store. Shifts roughly ${Math.round(shiftable).toLocaleString()} kWh/year from a $${inp.fit.toFixed(2)} feed-in credit to a $${inp.peakPrice.toFixed(2)} evening-peak avoided purchase.`,
+      rationale: inp.chargeFromGrid
+        ? `Charged from cheap off-peak/free grid power as well as any solar export, so it isn't limited by a small solar system. Shifts roughly ${Math.round(shiftable).toLocaleString()} kWh/year to a $${inp.peakPrice.toFixed(2)} evening-peak avoided purchase.`
+        : `Only pays back once there's solar generating spare, exportable energy to store. Shifts roughly ${Math.round(shiftable).toLocaleString()} kWh/year from a $${inp.fit.toFixed(2)} feed-in credit to a $${inp.peakPrice.toFixed(2)} evening-peak avoided purchase.`,
       calcRows: [
         { label: 'Battery size', value: `${inp.battSize} kWh` },
-        { label: 'Solar export available to store', value: `${Math.round(exportedForBattery).toLocaleString()} kWh/year` },
+        { label: 'Charging source', value: inp.chargeFromGrid ? 'Off-peak/free grid power + solar' : 'Solar export only' },
+        { note: inp.chargeFromGrid ? `Because this battery also charges from cheap grid power, its use isn't capped by how much solar you actually export — it's assumed to reliably fill most days.` : `This assumes the battery only ever charges from your own solar export. If you'd also charge it from cheap off-peak or free grid power, tick that option above — a small solar system otherwise makes this look far less favourable than it may really be.` },
+        { label: inp.chargeFromGrid ? 'Usable capacity' : 'Solar export available to store', value: inp.chargeFromGrid ? `${Math.round(shiftable).toLocaleString()} kWh/year` : `${Math.round(exportedForBattery).toLocaleString()} kWh/year` },
         { label: 'Shiftable to evening use', value: `${Math.round(shiftable).toLocaleString()} kWh/year (capped by battery size × ~300 cycles)` },
         { label: 'Peak price (evening use)', value: `${(inp.peakPrice*100).toFixed(0)}c/kWh` },
         { label: 'Feed-in tariff', value: `${(inp.fit*100).toFixed(0)}c/kWh` },
@@ -1190,6 +1220,13 @@ function calculate(inp){
     o.keyAssumptions = KEY_ASSUMPTIONS[o.id] || '';
     o.improveConfidence = IMPROVE_CONFIDENCE[o.id] || '';
     o.stayVerdict = stayVerdict(o.payback, inp.yearsStaying);
+    if(inp.financeRate > 0 && isFinite(o.payback)){
+      const financeCost = o.cost * (inp.financeRate/100);
+      const adjustedSaving = o.savings - financeCost;
+      o.financePayback = adjustedSaving > 0 ? o.cost / adjustedSaving : Infinity;
+    } else {
+      o.financePayback = null;
+    }
     o.stayVerdict3 = stayVerdict(o.payback, 3);
     o.stayVerdict15 = stayVerdict(o.payback, 15);
   });
