@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heat Pump Hot Water Payback in Australia (2026) | Australia Home Upgrade Roadmap</title>
+<meta name="description" content="A straight, sourced answer on heat pump hot water payback in Australia — typical costs, savings vs gas and electric, and a free independent calculator using your own numbers.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://au-home-upgrade-roadmap.vercel.app/heat-pump-payback.html">
+<meta property="og:title" content="Heat Pump Hot Water Payback in Australia">
+<meta property="og:description" content="A straight, sourced answer on heat pump hot water payback, plus a free independent calculator using your own numbers.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8EMZWDQR7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M8EMZWDQR7');
+</script>
+<style>
+  :root{
+    --bg:#F6F8FA; --bg-panel:#FFFFFF; --bg-card:#FFFFFF;
+    --ink:#152233; --ink-muted:#57697D; --ink-faint:#8A97A6;
+    --amber:#B5790A; --teal:#0E7C6B; --border:rgba(20,40,60,0.12);
+    --mono: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --display: "Century Gothic", "Avenir Next", "Segoe UI", var(--sans);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, rgba(20,40,60,0.035) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:48px 24px 80px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--amber); margin:0 0 12px;
+  }
+  h1{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(24px,4vw,36px); letter-spacing:-0.01em; margin:0 0 20px;
+  }
+  h2{
+    font-family:var(--display); font-weight:700; font-size:20px;
+    color:var(--ink); margin:36px 0 12px;
+  }
+  p{ color:var(--ink-muted); font-size:16px; margin:0 0 16px; }
+  .quick-answer{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:14px;
+    padding:22px 24px; margin:24px 0 32px;
+  }
+  .quick-answer p{ color:var(--ink); font-size:17px; margin:0; }
+  .quick-answer b{ color:var(--teal); }
+  .fact-row{
+    display:flex; gap:20px; flex-wrap:wrap; margin:20px 0 8px;
+  }
+  .fact{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+    padding:14px 18px; flex:1; min-width:140px;
+  }
+  .fact .k{ font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); }
+  .fact .v{ font-family:var(--mono); font-size:20px; color:var(--ink); margin-top:4px; }
+  .fact .v.pos{ color:var(--teal); }
+  .compare-row{ display:flex; gap:16px; flex-wrap:wrap; margin:16px 0 8px; }
+  .compare{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+    padding:16px 18px; flex:1; min-width:220px;
+  }
+  .compare .tag{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--amber); margin-bottom:8px; display:block;
+  }
+  ul{ color:var(--ink-muted); padding-left:20px; }
+  li{ margin-bottom:8px; }
+  a{ color:var(--teal); }
+  .fn-link{ color:var(--teal); text-decoration:none; font-weight:600; font-size:0.85em; }
+  .fn-link:hover, .fn-link:focus{ text-decoration:underline; }
+  .cta{
+    background:var(--bg-panel); border:1px solid var(--border); border-radius:16px;
+    padding:32px 28px; text-align:center; margin:44px 0 32px;
+  }
+  .cta h2{ margin-top:0; }
+  .cta-button{
+    display:inline-block; margin-top:14px;
+    background:var(--amber); color:#14263A; text-decoration:none;
+    font-family:var(--display); font-weight:700; font-size:16px;
+    padding:14px 32px; border-radius:10px;
+  }
+  .cta p.sub{ font-size:13px; color:var(--ink-faint); margin-top:14px; }
+  .footnotes{
+    margin-top:16px; padding-top:16px; border-top:1px solid var(--border);
+  }
+  .footnotes-title{
+    font-family:var(--display); font-size:13px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-muted); margin-bottom:10px;
+  }
+  .footnotes ol{ margin:0; padding-left:20px; }
+  .footnotes li{ font-size:12px; color:var(--ink-faint); line-height:1.7; }
+  .footnotes li a{ color:var(--teal); word-break:break-all; }
+  footer{
+    margin-top:32px; padding-top:20px; border-top:1px solid var(--border);
+    font-size:12.5px; color:var(--ink-faint); line-height:1.7;
+  }
+  .ref{ font-size:12px; color:var(--ink-faint); margin-top:8px; }
+  .guides{margin-top:18px; padding-top:16px; border-top:1px dashed var(--border);}
+  .guides-title{font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); font-family:var(--mono); margin-bottom:8px;}
+  .guides ul{margin:0; padding-left:18px;}
+  .guides li{margin-bottom:4px;}
+  .guides a{color:var(--teal); font-size:12.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Australia · Hot water upgrades</p>
+  <h1>Heat Pump Hot Water Payback in Australia</h1>
+
+  <div class="quick-answer">
+    <p><b>Short answer:</b> if you're currently on gas, expect a payback of roughly 4–5 years. If you're on an old electric resistive system, it's often faster — commonly 3–4 years — because resistive electric hot water is the least efficient option to begin with.</p>
+  </div>
+
+  <p>Heat pump hot water is a different kind of upgrade to solar — it only replaces how you heat water, not your whole electricity bill. That makes it one of the simplest upgrades to evaluate, and often one of the fastest to pay back.</p>
+
+  <h2>Why it's so efficient</h2>
+  <p>A standard electric hot water system generates heat directly from electricity — roughly 1 unit of electricity in for 1 unit of heat out. A heat pump instead <i>moves</i> existing heat from the surrounding air into your water, the same principle as reverse-cycle air conditioning. That lets it deliver several times more heat energy than the electricity it consumes, which is the entire reason the payback is usually so quick.</p>
+
+  <h2>Worked examples</h2>
+  <p>Using a typical install cost of ~$2,300 after the STC rebate<sup><a href="#fn1" class="fn-link">[1]</a></sup>:</p>
+
+  <div class="compare-row">
+    <div class="compare">
+      <span class="tag">Replacing gas</span>
+      <div class="fact-row" style="margin:0;">
+        <div class="fact"><div class="k">Saving</div><div class="v pos">~$475/yr</div></div>
+        <div class="fact"><div class="k">Payback</div><div class="v">~4.8 yrs</div></div>
+      </div>
+    </div>
+    <div class="compare">
+      <span class="tag">Replacing electric resistive</span>
+      <div class="fact-row" style="margin:0;">
+        <div class="fact"><div class="k">Saving</div><div class="v pos">~$625/yr</div></div>
+        <div class="fact"><div class="k">Payback</div><div class="v">~3.7 yrs</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="ref">Based on typical running costs of ~$750/yr for gas and ~$900/yr for electric resistive, against a heat pump running cost of ~$275/yr<sup><a href="#fn2" class="fn-link">[2]</a></sup> — the same assumptions used throughout this site. Your actual numbers depend on your household's hot water usage and current fuel prices.</p>
+
+  <h2>What actually changes your answer</h2>
+  <ul>
+    <li><b>Your current system</b> — replacing gas removes an appliance and its supply charge entirely; if it's your only gas appliance, disconnecting can save a further ~$350–400/yr not included above</li>
+    <li><b>State-based rebates</b> — Victoria, NSW, and Queensland all offer additional top-ups on top of the federal STC rebate, which can bring your net cost down further</li>
+    <li><b>Household hot water usage</b> — a larger household with higher usage sees bigger dollar savings from the same efficiency improvement</li>
+    <li><b>Whether you already have solar</b> — timing your heat pump to run during the day on existing solar generation can push real-world savings higher than these estimates</li>
+  </ul>
+
+  <div class="cta">
+    <h2>Check your own payback, not an average</h2>
+    <p>This page gives you the general picture. The free tool below uses your actual hot water type and budget — and tells you honestly whether this or another upgrade should come first.</p>
+    <a class="cta-button" href="https://au-home-upgrade-roadmap.vercel.app/">Model Your Own Home →</a>
+    <p class="sub">Independent — no installer links, no quotes collected, nothing sold.</p>
+  </div>
+
+  <div class="footnotes">
+    <div class="footnotes-title">Sources</div>
+    <ol>
+      <li id="fn1">Ohm Equity — heat pump hot water cost guide: typically $3,000–$4,000 before rebate, ~$975 STC rebate brings most installs to ~$2,200–$2,500 — <a href="https://ohmequity.com/calculator/heat-pump/" target="_blank" rel="noopener noreferrer">ohmequity.com/calculator/heat-pump</a></li>
+      <li id="fn2">Ohm Equity — running cost comparison: gas ~$600–$900/yr, heat pump on grid power ~$200–$350/yr — <a href="https://ohmequity.com/calculator/heat-pump/" target="_blank" rel="noopener noreferrer">ohmequity.com/calculator/heat-pump</a></li>
+    </ol>
+  </div>
+
+  <div class="guides">
+    <div class="guides-title">More guides</div>
+    <ul>
+      <li><a href="solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>This is general information, not personal financial advice. Costs, rebates, and running costs vary by household and location — get 2–3 real quotes before deciding. Figures on this page reflect industry-sourced assumptions current as of July 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -774,10 +774,22 @@
           <div class="assump-module-label">General — applies to every upgrade</div>
           <div class="assump-grid">
             <div class="field">
-              <label for="price">Electricity price</label>
+              <label for="price">Average electricity price (for usage estimate)</label>
               <input type="number" id="price" value="0.32" step="0.01">
-              <div class="unit">$ / kWh</div>
-              <div class="ref">Typical range 30–35c/kWh depending on state and retailer (SA runs higher, around 40–45c/kWh). <b>Source:</b> Canstar / Why Solar electricity price guides, July 2026. <sup><a href="#fn1" class="fn-link">[1]</a></sup><sup><a href="#fn2" class="fn-link">[2]</a></sup></div>
+              <div class="unit">$ / kWh — used only to estimate your annual usage from your bill</div>
+              <div class="ref">Typical blended range 30–35c/kWh depending on state and retailer (SA runs higher, around 40–45c/kWh). <b>Source:</b> Canstar / Why Solar electricity price guides, July 2026. <sup><a href="#fn1" class="fn-link">[1]</a></sup><sup><a href="#fn2" class="fn-link">[2]</a></sup></div>
+            </div>
+            <div class="field">
+              <label for="offPeakPrice">Off-peak / daytime price</label>
+              <input type="number" id="offPeakPrice" value="0.25" step="0.01">
+              <div class="unit">$ / kWh — used for solar self-consumption savings</div>
+              <div class="ref">Typical range 20–30c/kWh. Solar self-consumption is valued at this rate since most generation happens during standard off-peak/shoulder daytime hours, not evening peak. <b>Source:</b> Why Solar electricity price guide, 2026. <sup><a href="#fn8" class="fn-link">[8]</a></sup></div>
+            </div>
+            <div class="field">
+              <label for="peakPrice">Peak (evening) price</label>
+              <input type="number" id="peakPrice" value="0.48" step="0.01">
+              <div class="unit">$ / kWh — used for battery evening-use savings</div>
+              <div class="ref">Typical range 45–56c/kWh. A battery's value comes from shifting stored solar into the evening peak period, so its savings are valued at this higher rate. <b>Source:</b> Why Solar electricity price guide, 2026. <sup><a href="#fn8" class="fn-link">[8]</a></sup></div>
             </div>
             <div class="field">
               <label for="fit">Feed-in tariff</label>
@@ -871,6 +883,7 @@
             <li id="fn5">Why Solar — battery price tracker, July 2026 — <a href="https://www.whysolar.com.au/solutions/batteries/price-tracker" target="_blank" rel="noopener noreferrer">whysolar.com.au/solutions/batteries/price-tracker</a></li>
             <li id="fn6">Ohm Equity — heat pump hot water calculator, 2026 — <a href="https://ohmequity.com/calculator/heat-pump/" target="_blank" rel="noopener noreferrer">ohmequity.com/calculator/heat-pump</a></li>
             <li id="fn7">Why Solar — solar feed-in tariffs by state, July 2026 — <a href="https://www.whysolar.com.au/feed-in-tariffs" target="_blank" rel="noopener noreferrer">whysolar.com.au/feed-in-tariffs</a></li>
+            <li id="fn8">Why Solar — electricity price guide, peak ~45–56c/kWh and off-peak ~20–30c/kWh, 2026 — <a href="https://www.whysolar.com.au/guides/electricity-prices-australia" target="_blank" rel="noopener noreferrer">whysolar.com.au/guides/electricity-prices-australia</a></li>
           </ol>
           <p class="footnotes-caveat">These are third-party industry sources, not government guarantees — figures move, so treat them as a starting point and confirm current numbers before making a decision.</p>
         </div>
@@ -890,6 +903,7 @@
       <p class="guides-title">Guides</p>
       <ul>
         <li><a href="solar-brisbane.html">Is solar worth it in Brisbane?</a></li>
+        <li><a href="heat-pump-payback.html">Heat pump hot water payback in Australia</a></li>
       </ul>
     </div>
   </footer>
@@ -1009,6 +1023,8 @@ function getInputs(){
     budget: parseFloat($('budget').value) || 0,
     yearsStaying: parseFloat($('yearsStaying').value) || 10,
     price: parseFloat($('price').value) || 0.32,
+    offPeakPrice: parseFloat($('offPeakPrice').value) || 0.25,
+    peakPrice: parseFloat($('peakPrice').value) || 0.48,
     fit: parseFloat($('fit').value) || 0.05,
     solarCost: parseFloat($('solarCost').value) || 1100,
     selfCons: (parseFloat($('selfCons').value) || 35) / 100,
@@ -1041,28 +1057,28 @@ function calculate(inp){
     const genAnnual = sizeKw * yieldKw * 365;
     const selfConsumed = Math.min(genAnnual * inp.selfCons, dailyUsage*365);
     const exported = genAnnual - selfConsumed;
-    const savings = selfConsumed*inp.price + exported*inp.fit;
+    const savings = selfConsumed*inp.offPeakPrice + exported*inp.fit;
     const payback = cost/savings;
     const selfPct = genAnnual > 0 ? (selfConsumed/genAnnual)*100 : 0;
     const exportPct = 100 - selfPct;
-    const savingsAtPriceUp = selfConsumed*(inp.price*1.2) + exported*inp.fit;
-    const savingsAtPriceDown = selfConsumed*(inp.price*0.8) + exported*inp.fit;
+    const savingsAtPriceUp = selfConsumed*(inp.offPeakPrice*1.2) + exported*inp.fit;
+    const savingsAtPriceDown = selfConsumed*(inp.offPeakPrice*0.8) + exported*inp.fit;
     options.push({
       id:'solar', name:'Solar panels', sub:`${sizeKw} kW system, sized to your usage`,
       cost, savings, payback,
       priceUpPayback: cost/savingsAtPriceUp,
       priceDownPayback: cost/savingsAtPriceDown,
-      rationale:`Estimated to generate ${Math.round(genAnnual).toLocaleString()} kWh/year. ${Math.round(inp.selfCons*100)}% used on-site at $${inp.price.toFixed(2)}/kWh, the rest exported at $${inp.fit.toFixed(2)}/kWh feed-in tariff.`,
+      rationale:`Estimated to generate ${Math.round(genAnnual).toLocaleString()} kWh/year. ${Math.round(inp.selfCons*100)}% used on-site at $${inp.offPeakPrice.toFixed(2)}/kWh (off-peak/daytime rate), the rest exported at $${inp.fit.toFixed(2)}/kWh feed-in tariff.`,
       calcRows: [
         { label: 'Annual usage', value: `${Math.round(dailyUsage*365).toLocaleString()} kWh` },
-        { note: `Derived by dividing your annual bill (${fmtMoney(inp.bill)}) by the electricity price ($${inp.price.toFixed(2)}/kWh) — an estimate of your total consumption, not a meter reading.` },
+        { note: `Derived by dividing your annual bill (${fmtMoney(inp.bill)}) by the average electricity price ($${inp.price.toFixed(2)}/kWh) — an estimate of your total consumption, not a meter reading.` },
         { label: 'System size', value: `${sizeKw} kW` },
         { label: 'Estimated annual generation', value: `${Math.round(genAnnual).toLocaleString()} kWh` },
         { label: 'Estimated self-consumption', value: `${selfPct.toFixed(0)}% (${Math.round(selfConsumed).toLocaleString()} kWh)` },
         { label: 'Estimated export', value: `${exportPct.toFixed(0)}% (${Math.round(exported).toLocaleString()} kWh)` },
-        { label: 'Electricity price', value: `${(inp.price*100).toFixed(0)}c/kWh` },
+        { label: 'Off-peak price (self-consumption)', value: `${(inp.offPeakPrice*100).toFixed(0)}c/kWh` },
         { label: 'Feed-in tariff', value: `${(inp.fit*100).toFixed(0)}c/kWh` },
-        { label: 'Calculation', value: `(${Math.round(selfConsumed).toLocaleString()} × $${inp.price.toFixed(2)}) + (${Math.round(exported).toLocaleString()} × $${inp.fit.toFixed(2)})` },
+        { label: 'Calculation', value: `(${Math.round(selfConsumed).toLocaleString()} × $${inp.offPeakPrice.toFixed(2)}) + (${Math.round(exported).toLocaleString()} × $${inp.fit.toFixed(2)})` },
         { label: 'Calculated annual saving', value: fmtMoney(savings), highlight: true }
       ]
     });
@@ -1074,24 +1090,24 @@ function calculate(inp){
   if(inp.assessBattery && solarInstalledSize > 0){
     const battCost = inp.battSize * inp.battCost;
     const shiftable = Math.min(exportedForBattery, inp.battSize * 300);
-    const extraSavings = shiftable * (inp.price - inp.fit);
+    const extraSavings = shiftable * (inp.peakPrice - inp.fit);
     const payback = extraSavings > 0 ? battCost/extraSavings : Infinity;
-    const extraSavingsAtPriceUp = shiftable * ((inp.price*1.2) - inp.fit);
-    const extraSavingsAtPriceDown = shiftable * ((inp.price*0.8) - inp.fit);
+    const extraSavingsAtPriceUp = shiftable * ((inp.peakPrice*1.2) - inp.fit);
+    const extraSavingsAtPriceDown = shiftable * ((inp.peakPrice*0.8) - inp.fit);
     options.push({
       id:'battery', name:'Home battery', sub:`${inp.battSize} kWh, sized to your solar export`,
       cost: battCost, savings: extraSavings, payback,
       priceUpPayback: extraSavingsAtPriceUp > 0 ? battCost/extraSavingsAtPriceUp : Infinity,
       priceDownPayback: extraSavingsAtPriceDown > 0 ? battCost/extraSavingsAtPriceDown : Infinity,
-      rationale:`Only pays back once there's solar generating spare, exportable energy to store. Shifts roughly ${Math.round(shiftable).toLocaleString()} kWh/year from a ${inp.fit.toFixed(2)} feed-in credit to a $${inp.price.toFixed(2)} avoided purchase.`,
+      rationale:`Only pays back once there's solar generating spare, exportable energy to store. Shifts roughly ${Math.round(shiftable).toLocaleString()} kWh/year from a $${inp.fit.toFixed(2)} feed-in credit to a $${inp.peakPrice.toFixed(2)} evening-peak avoided purchase.`,
       calcRows: [
         { label: 'Battery size', value: `${inp.battSize} kWh` },
         { label: 'Solar export available to store', value: `${Math.round(exportedForBattery).toLocaleString()} kWh/year` },
         { label: 'Shiftable to evening use', value: `${Math.round(shiftable).toLocaleString()} kWh/year (capped by battery size × ~300 cycles)` },
-        { label: 'Electricity price', value: `${(inp.price*100).toFixed(0)}c/kWh` },
+        { label: 'Peak price (evening use)', value: `${(inp.peakPrice*100).toFixed(0)}c/kWh` },
         { label: 'Feed-in tariff', value: `${(inp.fit*100).toFixed(0)}c/kWh` },
-        { label: 'Price gap captured', value: `${((inp.price-inp.fit)*100).toFixed(0)}c/kWh` },
-        { label: 'Calculation', value: `${Math.round(shiftable).toLocaleString()} × ($${inp.price.toFixed(2)} − $${inp.fit.toFixed(2)})` },
+        { label: 'Price gap captured', value: `${((inp.peakPrice-inp.fit)*100).toFixed(0)}c/kWh` },
+        { label: 'Calculation', value: `${Math.round(shiftable).toLocaleString()} × ($${inp.peakPrice.toFixed(2)} − $${inp.fit.toFixed(2)})` },
         { label: 'Calculated annual saving', value: fmtMoney(extraSavings), highlight: true }
       ]
     });
@@ -1130,8 +1146,8 @@ function calculate(inp){
     hotwater: 'Straightforward like-for-like replacement — fewer assumptions involved.'
   };
   const KEY_ASSUMPTIONS = {
-    solar: 'Daytime electricity use, feed-in tariff, future price growth.',
-    battery: 'How much solar export is actually available to store, gap between usage price and feed-in tariff.',
+    solar: 'Daytime (off-peak) electricity price, feed-in tariff, future price growth.',
+    battery: 'How much solar export is actually available to store, gap between peak evening price and feed-in tariff.',
     hotwater: 'Current fuel cost, hot water usage volume.'
   };
   const IMPROVE_CONFIDENCE = {
