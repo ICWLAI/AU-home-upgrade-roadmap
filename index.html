@@ -697,6 +697,16 @@
         <div class="unit">kW</div>
       </div>
 
+      <div class="checkfield">
+        <input type="checkbox" id="hasBattery">
+        <label for="hasBattery">I already have a battery</label>
+      </div>
+      <div class="field" id="actualBatterySavingField" style="display:none;">
+        <label for="actualBatterySaving">Your actual monthly saving from the battery</label>
+        <input type="number" id="actualBatterySaving" value="75" min="0" step="5">
+        <div class="unit">AUD/month — from your own bills, not modelled</div>
+      </div>
+
       <div class="field">
         <label for="hotWater">Hot water system</label>
         <select id="hotWater">
@@ -1015,6 +1025,8 @@ function getInputs(){
     state: $('state').value,
     bill: parseFloat($('bill').value) || 0,
     hasSolar: $('hasSolar').checked,
+    hasBattery: $('hasBattery').checked,
+    actualBatterySaving: parseFloat($('actualBatterySaving').value) || 0,
     assessSolar: $('assessSolar').checked,
     assessBattery: $('assessBattery').checked,
     assessHotwater: $('assessHotwater').checked,
@@ -1087,7 +1099,23 @@ function calculate(inp){
   }
 
   // --- BATTERY ---
-  if(inp.assessBattery && solarInstalledSize > 0){
+  if(inp.assessBattery && inp.hasBattery){
+    const battCost = inp.battSize * inp.battCost;
+    const extraSavings = inp.actualBatterySaving * 12;
+    const payback = extraSavings > 0 ? battCost/extraSavings : Infinity;
+    options.push({
+      id:'battery', name:'Home battery', sub:`${inp.battSize} kWh — using your own reported saving`,
+      cost: battCost, savings: extraSavings, payback,
+      rationale:`Based on your own reported saving of $${inp.actualBatterySaving}/month, not a modelled estimate — this bypasses the peak/off-peak assumptions entirely, so it'll match your real tariff and usage pattern.`,
+      calcRows: [
+        { label: 'Battery cost (yours)', value: `${fmtMoney(battCost)}` },
+        { note: `Cost is taken from your own Battery size × Battery install cost fields in Assumptions — edit those if this doesn't match what you actually paid.` },
+        { label: 'Your reported monthly saving', value: `${fmtMoney(inp.actualBatterySaving)}/month` },
+        { label: 'Calculation', value: `${fmtMoney(battCost)} ÷ (${fmtMoney(inp.actualBatterySaving)} × 12)` },
+        { label: 'Calculated annual saving', value: fmtMoney(extraSavings), highlight: true }
+      ]
+    });
+  } else if(inp.assessBattery && solarInstalledSize > 0){
     const battCost = inp.battSize * inp.battCost;
     const shiftable = Math.min(exportedForBattery, inp.battSize * 300);
     const extraSavings = shiftable * (inp.peakPrice - inp.fit);
@@ -1129,30 +1157,31 @@ function calculate(inp){
         { note: `Typical industry figure for a ${inp.hotWater === 'gas' ? 'gas' : 'resistive electric'} system — not calculated from your own bill. Adjust it in the Assumptions panel if you know your actual running cost.` },
         { label: 'Heat pump running cost', value: `${fmtMoney(inp.hpRunningCost)}/year` },
         { label: 'Calculation', value: `${fmtMoney(currentCost)} − ${fmtMoney(inp.hpRunningCost)}` },
-        { label: 'Calculated annual saving', value: fmtMoney(savings), highlight: true }
-      ]
+        { label: 'Calculated annual saving', value: fmtMoney(savings), highlight: true },
+        { note: currentCost < 400 ? `Your current running cost is quite low, so even a large percentage saving translates to a modest dollar saving — this is why the payback can look long despite a genuinely efficient upgrade. The percentage improvement is real; it's just working on a small base.` : null }
+      ].filter(row => row.note !== null)
     });
   }
 
   // --- CONFIDENCE + SENSITIVITY (applied to every option) ---
   const CONFIDENCE = {
     solar: inp.bill > 500 ? 'high' : 'medium',
-    battery: 'medium',
+    battery: inp.hasBattery ? 'high' : 'medium',
     hotwater: 'high'
   };
   const CONFIDENCE_NOTE = {
     solar: inp.bill > 500 ? 'Based on your actual annual bill.' : 'Bill seems low or unset — estimate is rougher than usual.',
-    battery: 'Assumes typical export patterns, not your actual meter data.',
+    battery: inp.hasBattery ? 'Based on your own reported saving, not a model.' : 'Assumes typical export patterns and standard peak/off-peak pricing — not your actual meter data or tariff.',
     hotwater: 'Straightforward like-for-like replacement — fewer assumptions involved.'
   };
   const KEY_ASSUMPTIONS = {
     solar: 'Daytime (off-peak) electricity price, feed-in tariff, future price growth.',
-    battery: 'How much solar export is actually available to store, gap between peak evening price and feed-in tariff.',
+    battery: inp.hasBattery ? 'Whether your reported saving stays consistent year to year.' : 'How much solar export is actually available to store, gap between peak evening price and feed-in tariff — may not match special tariffs like Solar Sharer.',
     hotwater: 'Current fuel cost, hot water usage volume.'
   };
   const IMPROVE_CONFIDENCE = {
     solar: 'Enter your actual annual bill and confirm your roof gets good sun exposure most of the day.',
-    battery: 'Check a recent bill for how much solar you actually export, rather than the typical estimate used here.',
+    battery: inp.hasBattery ? 'Already using your real number — the main thing that could change this is your saving varying month to month.' : 'Check a recent bill for how much solar you actually export and your actual import/export tariff rates, rather than the standard peak/off-peak estimate used here.',
     hotwater: 'Confirm your current hot water fuel cost from a recent bill.'
   };
   options.forEach(o => {
@@ -1181,6 +1210,7 @@ function calculate(inp){
 function render(){
   const inp = getInputs();
   $('solarSizeField').style.display = inp.hasSolar ? 'block' : 'none';
+  $('actualBatterySavingField').style.display = inp.hasBattery ? 'block' : 'none';
 
   const { ranked, delayed, spent, hotWaterAlreadyEfficient } = calculate(inp);
 
