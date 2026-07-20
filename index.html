@@ -486,7 +486,57 @@
     font-family:var(--mono);
     margin-bottom:8px;
   }
+  .sens-main-label{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:14px;
+    color:var(--ink);
+    margin:14px 0 12px;
+  }
+  .sens-sublabel{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--amber);
+    font-family:var(--mono);
+    margin:14px 0 8px;
+  }
   .sens-row{display:flex; gap:22px; flex-wrap:wrap; margin-bottom:10px;}
+  .slider-row{margin-bottom:14px;}
+  .sens-slider{
+    width:100%;
+    -webkit-appearance:none; appearance:none;
+    height:6px;
+    border-radius:999px;
+    background:var(--border);
+    outline:none;
+    margin-bottom:8px;
+  }
+  .sens-slider::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none;
+    width:18px; height:18px;
+    border-radius:50%;
+    background:var(--amber);
+    cursor:pointer;
+    border:2px solid var(--bg-card);
+    box-shadow:0 0 0 1px var(--border);
+  }
+  .sens-slider::-moz-range-thumb{
+    width:18px; height:18px;
+    border-radius:50%;
+    background:var(--amber);
+    cursor:pointer;
+    border:2px solid var(--bg-card);
+  }
+  .slider-output{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:13px; color:var(--ink);
+  }
+  .slider-pct{
+    font-weight:700; color:var(--amber);
+    min-width:56px; display:inline-block;
+  }
+  .slider-result{color:var(--ink);}
   .sens-item .sk{font-size:11.5px; color:var(--ink-faint);}
   .sens-item .sv{font-family:var(--mono); font-size:15px; margin-top:1px;}
   .stay-verdict{
@@ -654,25 +704,6 @@
       </div>
       <p id="moduleWarning" style="display:none; font-size:12px; color:var(--red); margin:8px 0 0;">Select at least 2 upgrades to compare.</p>
 
-      <p class="roadmap-label">On the roadmap — not built yet</p>
-      <div class="chip-row">
-        <label class="chip disabled">
-          <input type="checkbox" disabled>
-          <span class="chip-icon">⚡</span><span>EV charging</span>
-          <span class="soon-tag">Soon</span>
-        </label>
-        <label class="chip disabled">
-          <input type="checkbox" disabled>
-          <span class="chip-icon">🧱</span><span>Insulation</span>
-          <span class="soon-tag">Soon</span>
-        </label>
-        <label class="chip disabled">
-          <input type="checkbox" disabled>
-          <span class="chip-icon">🪟</span><span>Double glazing</span>
-          <span class="soon-tag">Soon</span>
-        </label>
-      </div>
-
       <h2 style="margin-top:22px;">Your home</h2>
 
       <div class="field">
@@ -724,7 +755,17 @@
         <select id="hotWater">
           <option value="gas">Gas</option>
           <option value="electric">Electric</option>
+          <option value="solarthermal">Solar thermal (electric/gas boost)</option>
           <option value="heatpump">Already a heat pump</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="householdSize">Household size (for heat pump sizing)</label>
+        <select id="householdSize">
+          <option value="small">Small — 1–2 people</option>
+          <option value="medium" selected>Medium — 3–4 people</option>
+          <option value="large">Large — 5+ people</option>
         </select>
       </div>
 
@@ -875,10 +916,22 @@
           <div class="assump-module-label">🚿 Heat pump for hot water</div>
           <div class="assump-grid">
             <div class="field">
-              <label for="hpCost">Heat pump for hot water cost</label>
-              <input type="number" id="hpCost" value="2300" step="100">
+              <label for="hpCostSmall">Heat pump cost — small household (1–2 people, ~180L)</label>
+              <input type="number" id="hpCostSmall" value="2700" step="100">
               <div class="unit">$ installed, after STC rebate</div>
-              <div class="ref">Typically $3,000–$4,000 before rebate; the federal STC rebate (~25 certificates, ≈$975–$1,200) brings most installs to roughly $1,200–$2,500 out of pocket. State top-ups (VIC's VEU, NSW's ESS, QLD's Climate Ready Homes) can reduce this further. <b>Source:</b> Ohm Equity / Gridly heat pump cost guides, July 2026. <sup><a href="#fn6" class="fn-link">[6]</a></sup></div>
+              <div class="ref">Typical range $2,500–$3,200 after federal STC rebate for a smaller-capacity unit. <b>Source:</b> CHOICE / Solar Choice heat pump price index, 2026. <sup><a href="#fn9" class="fn-link">[9]</a></sup></div>
+            </div>
+            <div class="field">
+              <label for="hpCostMedium">Heat pump cost — medium household (3–4 people, ~270L)</label>
+              <input type="number" id="hpCostMedium" value="4300" step="100">
+              <div class="unit">$ installed, after STC rebate</div>
+              <div class="ref">National average is $4,324 after federal STC rebate for a typical family-sized system — meaningfully higher than smaller units. State top-ups (VIC, NSW, QLD) can reduce this further. <b>Source:</b> Solar Choice Heat Pump Price Index, April 2026. <sup><a href="#fn9" class="fn-link">[9]</a></sup></div>
+            </div>
+            <div class="field">
+              <label for="hpCostLarge">Heat pump cost — large household (5+ people, 315–400L+)</label>
+              <input type="number" id="hpCostLarge" value="6000" step="100">
+              <div class="unit">$ installed, after STC rebate</div>
+              <div class="ref">Large-capacity systems (315–400L+) typically cost $6,000–$8,000+ before rebate, landing around $5,500–$7,000 after — a real-world example: a Reclaim CO2 400L unit lists around $6,800 retail alone, before installation. <b>Source:</b> CHOICE comparison / heat pump retailer pricing, 2026. <sup><a href="#fn9" class="fn-link">[9]</a></sup></div>
             </div>
             <div class="field">
               <label for="gasRunningCost">Gas hot water running cost</label>
@@ -912,6 +965,7 @@
             <li id="fn6">Ohm Equity — heat pump hot water calculator, 2026 — <a href="https://ohmequity.com/calculator/heat-pump/" target="_blank" rel="noopener noreferrer">ohmequity.com/calculator/heat-pump</a></li>
             <li id="fn7">Why Solar — solar feed-in tariffs by state, July 2026 — <a href="https://www.whysolar.com.au/feed-in-tariffs" target="_blank" rel="noopener noreferrer">whysolar.com.au/feed-in-tariffs</a></li>
             <li id="fn8">Why Solar — electricity price guide, peak ~45–56c/kWh and off-peak ~20–30c/kWh, 2026 — <a href="https://www.whysolar.com.au/guides/electricity-prices-australia" target="_blank" rel="noopener noreferrer">whysolar.com.au/guides/electricity-prices-australia</a></li>
+            <li id="fn9">Solar Choice Heat Pump Price Index (national average $4,324 after STC, April 2026) and CHOICE heat pump comparison (270L–315L systems $3,400–$6,950), 2026 — <a href="https://www.solarchoice.net.au/heat-pumps/" target="_blank" rel="noopener noreferrer">solarchoice.net.au/heat-pumps</a></li>
           </ol>
           <p class="footnotes-caveat">These are third-party industry sources, not government guarantees — figures move, so treat them as a starting point and confirm current numbers before making a decision.</p>
         </div>
@@ -924,7 +978,7 @@
 
   <footer>
     <p><b>How this works:</b> each upgrade's cost and annual saving are estimated from the assumptions below, using typical solar yield for your state. Payback = cost ÷ annual saving. Upgrades are ranked fastest-payback first, filled against your budget in order. Anything past the delay threshold is flagged rather than ranked, regardless of budget.</p>
-    <p><b>Not yet included:</b> EV charging, insulation, double glazing. These are on the roadmap — this is an early working version covering the three upgrades that interact most: solar, battery, and hot water.</p>
+    <p><b>Currently covered:</b> solar, battery, and heat pump hot water — the three upgrades that interact most with each other.</p>
     <p>This tool models general assumptions against the numbers you enter — it does not consider your complete personal or financial circumstances, and nothing on this page is personal or general financial advice. Costs, rebates and STC prices vary — get 2–3 real quotes before deciding.</p>
 
     <div class="guides">
@@ -957,6 +1011,37 @@ function stayVerdict(payback, years){
   if(ratio < 1) return { label: 'Poor investment', cls: 'poor' };
   if(ratio < 2) return { label: 'Good investment', cls: 'good' };
   return { label: 'Excellent investment', cls: 'excellent' };
+}
+
+function updateSensSlider(el){
+  const type = el.dataset.type;
+  const val = parseFloat(el.value);
+  const row = el.closest('.slider-row');
+  const pctSpan = row.querySelector('.slider-pct');
+  const resultSpan = row.querySelector('.slider-result');
+
+  if(type === 'price'){
+    const cost = parseFloat(el.dataset.cost);
+    const savings0 = parseFloat(el.dataset.savings0);
+    const slope = parseFloat(el.dataset.slope);
+    const savings = savings0 + slope * val;
+    const payback = savings > 0 ? cost / savings : Infinity;
+    pctSpan.textContent = (val >= 0 ? '+' : '') + val + '%';
+    resultSpan.textContent = fmtYears(payback) + ' payback';
+  } else if(type === 'stay'){
+    const payback = parseFloat(el.dataset.payback);
+    const verdict = stayVerdict(payback, val);
+    pctSpan.textContent = val + ' yrs';
+    resultSpan.innerHTML = `<span class="stay-tag ${verdict.cls}">${verdict.label}</span>`;
+  } else if(type === 'finance'){
+    const cost = parseFloat(el.dataset.cost);
+    const savings = parseFloat(el.dataset.savings);
+    const financeCost = cost * (val / 100);
+    const adjustedSaving = savings - financeCost;
+    const payback = adjustedSaving > 0 ? cost / adjustedSaving : Infinity;
+    pctSpan.textContent = val + '%/yr';
+    resultSpan.textContent = fmtYears(payback) + ' payback';
+  }
 }
 
 async function fetchAIExplanations(options, inp){
@@ -1008,10 +1093,13 @@ function buildCalcRowsHTML(o){
 
 function buildDetailsHTML(o, inp){
   const priceSection = o.priceUpPayback !== undefined ? `
-    <div class="sens-row">
-      <div class="sens-item"><div class="sk">Price −20%</div><div class="sv">${fmtYears(o.priceDownPayback)}</div></div>
-      <div class="sens-item"><div class="sk">As estimated</div><div class="sv">${fmtYears(o.payback)}</div></div>
-      <div class="sens-item"><div class="sk">Price +20%</div><div class="sv">${fmtYears(o.priceUpPayback)}</div></div>
+    <div class="slider-row">
+      <input type="range" min="-30" max="30" value="0" step="5" class="sens-slider"
+        data-type="price" data-cost="${o.cost}"
+        data-savings0="${o.cost/o.payback}"
+        data-slope="${((o.cost/o.priceUpPayback) - (o.cost/o.priceDownPayback)) / 40}"
+        oninput="updateSensSlider(this)">
+      <div class="slider-output"><span class="slider-pct">0%</span> price change → <span class="slider-result">${fmtYears(o.payback)}</span></div>
     </div>
   ` : `
     <p style="font-size:12px; color:var(--ink-faint); margin:0 0 10px;">Not price-linked in this model — the saving here comes from a fixed running-cost estimate, not your electricity rate. See the calculation below.</p>
@@ -1019,37 +1107,38 @@ function buildDetailsHTML(o, inp){
 
   return `
     <details class="sensitivity">
-      <summary>Show sensitivity &amp; calculation</summary>
+      <summary>Show calculation &amp; sensitivities</summary>
 
-      <div class="sens-label">Sensitivity — electricity price</div>
+      <div class="sens-main-label">Calculation</div>
+      <div class="calc-table">${buildCalcRowsHTML(o)}</div>
+
+      <div class="calc-divider"></div>
+      <div class="sens-main-label">Sensitivities</div>
+
+      <div class="sens-sublabel">Electricity price</div>
       ${priceSection}
 
-      <div class="sens-label" style="margin-top:4px;">Sensitivity — how long you stay</div>
-      <div class="sens-row stay-row">
-        <div class="sens-item"><div class="sk">Stay 3 years</div><div class="sv stay-tag ${o.stayVerdict3.cls}">${o.stayVerdict3.label}</div></div>
-        <div class="sens-item"><div class="sk">Stay 15 years</div><div class="sv stay-tag ${o.stayVerdict15.cls}">${o.stayVerdict15.label}</div></div>
-      </div>
-      <div class="stay-verdict ${o.stayVerdict.cls}">
-        Your plan — stay ${inp.yearsStaying} years: <b>${o.stayVerdict.label}</b>
+      <div class="sens-sublabel">How long you stay</div>
+      <div class="slider-row">
+        <input type="range" min="1" max="20" value="${inp.yearsStaying}" step="1" class="sens-slider"
+          data-type="stay" data-payback="${o.payback}"
+          oninput="updateSensSlider(this)">
+        <div class="slider-output"><span class="slider-pct">${inp.yearsStaying} yrs</span> → <span class="slider-result">${o.stayVerdict.label}</span></div>
       </div>
 
-      ${inp.financeRate > 0 ? `
-      <div class="sens-label" style="margin-top:14px;">Sensitivity — cost of capital</div>
-      <div class="sens-row">
-        <div class="sens-item"><div class="sk">Simple payback</div><div class="sv">${fmtYears(o.payback)}</div></div>
-        <div class="sens-item"><div class="sk">Including ${inp.financeRate}%/yr cost of capital</div><div class="sv">${fmtYears(o.financePayback)}</div></div>
+      <div class="sens-sublabel">Cost of capital</div>
+      <div class="slider-row">
+        <input type="range" min="0" max="10" value="${inp.financeRate}" step="0.5" class="sens-slider"
+          data-type="finance" data-cost="${o.cost}" data-savings="${o.savings}"
+          oninput="updateSensSlider(this)">
+        <div class="slider-output"><span class="slider-pct">${inp.financeRate}%/yr</span> → <span class="slider-result">${fmtYears(o.financePayback !== null ? o.financePayback : o.payback)}</span></div>
       </div>
-      <p style="font-size:11.5px; color:var(--ink-faint); margin:0 0 10px;">This is one debatable way to account for financing or foregone investment returns — see Assumptions for the reasoning. Set the rate to 0 to ignore it.</p>
-      ` : ``}
+      <p style="font-size:11.5px; color:var(--ink-faint); margin:6px 0 0;">Represents loan interest or foregone investment returns on the capital — a debatable but adjustable assumption. Drag to 0 to ignore it.</p>
 
       <div style="margin-top:12px; font-size:12.5px; color:var(--ink-muted); line-height:1.6;">
         <b style="color:var(--ink-faint); text-transform:uppercase; font-size:11px; letter-spacing:0.05em;">Most sensitive to:</b> ${o.keyAssumptions}<br>
         <b style="color:var(--ink-faint); text-transform:uppercase; font-size:11px; letter-spacing:0.05em;">To improve confidence:</b> ${o.improveConfidence}
       </div>
-
-      <div class="calc-divider"></div>
-      <div class="sens-label">Calculation</div>
-      <div class="calc-table">${buildCalcRowsHTML(o)}</div>
     </details>
   `;
 }
@@ -1077,7 +1166,10 @@ function getInputs(){
     selfCons: (parseFloat($('selfCons').value) || 35) / 100,
     battSize: parseFloat($('battSize').value) || 10,
     battCost: parseFloat($('battCost').value) || 950,
-    hpCost: parseFloat($('hpCost').value) || 2300,
+    hpCostSmall: parseFloat($('hpCostSmall').value) || 2700,
+    hpCostMedium: parseFloat($('hpCostMedium').value) || 4300,
+    hpCostLarge: parseFloat($('hpCostLarge').value) || 6000,
+    householdSize: $('householdSize').value,
     gasRunningCost: parseFloat($('gasRunningCost').value) || 750,
     electricRunningCost: parseFloat($('electricRunningCost').value) || 900,
     hpRunningCost: parseFloat($('hpRunningCost').value) || 275,
@@ -1184,20 +1276,28 @@ function calculate(inp){
   }
 
   // --- HEAT PUMP HOT WATER ---
-  if(inp.assessHotwater && inp.hotWater !== 'heatpump'){
+  const HP_COST_BY_SIZE = { small: inp.hpCostSmall, medium: inp.hpCostMedium, large: inp.hpCostLarge };
+  let hotWaterNote = null;
+
+  if(inp.assessHotwater && inp.hotWater === 'solarthermal'){
+    hotWaterNote = { skipped: true, reason: `You've told us your hot water is solar thermal with electric/gas boost — this is already a genuinely efficient system, and comparing it against a heat pump isn't a calculation this tool models yet (the economics depend heavily on your specific collector performance and boost usage). We've deliberately left this out rather than show you a number we can't stand behind.` };
+  } else if(inp.assessHotwater && inp.hotWater !== 'heatpump'){
     const currentCost = inp.hotWater === 'gas' ? inp.gasRunningCost : inp.electricRunningCost;
+    const hpCostForSize = HP_COST_BY_SIZE[inp.householdSize] || inp.hpCostMedium;
     const savings = currentCost - inp.hpRunningCost;
-    const payback = inp.hpCost/savings;
+    const payback = hpCostForSize/savings;
     options.push({
-      id:'hotwater', name:'Heat pump for hot water', sub:`Replacing your ${inp.hotWater === 'gas' ? 'gas' : 'electric resistive'} system`,
-      cost: inp.hpCost, savings, payback,
+      id:'hotwater', name:'Heat pump for hot water', sub:`Replacing your ${inp.hotWater === 'gas' ? 'gas' : 'electric resistive'} system — ${inp.householdSize} household sizing`,
+      cost: hpCostForSize, savings, payback,
       rationale: inp.hotWater === 'gas'
         ? `Removes a gas appliance entirely. If timed to run on daytime solar, real-world savings are often higher than this estimate.`
         : `Roughly 3–4× more efficient than a resistive electric tank for the same hot water.`,
       calcRows: [
         { label: `Current ${inp.hotWater === 'gas' ? 'gas' : 'electric resistive'} running cost`, value: `${fmtMoney(currentCost)}/year` },
-        { note: `Typical industry figure for a ${inp.hotWater === 'gas' ? 'gas' : 'resistive electric'} system — not calculated from your own bill. Adjust it in the Assumptions panel if you know your actual running cost.` },
+        { note: `Typical industry figure for a ${inp.hotWater === 'gas' ? 'gas' : 'resistive electric'} system — not calculated from your own bill. If your actual energy costs are already very low (e.g. extensive existing solar, a battery, or a free/off-peak tariff), this figure is likely too high — edit it directly in Assumptions to reflect your real cost, or this result won't mean much for your situation.` },
         { label: 'Heat pump running cost', value: `${fmtMoney(inp.hpRunningCost)}/year` },
+        { label: `Install cost (${inp.householdSize} household)`, value: `${fmtMoney(hpCostForSize)}` },
+        { note: `Cost varies substantially by tank size and household hot water demand — this is not a one-size-fits-all figure. Change "Household size" above, or edit the cost directly in Assumptions if you have a real quote.` },
         { label: 'Calculation', value: `${fmtMoney(currentCost)} − ${fmtMoney(inp.hpRunningCost)}` },
         { label: 'Calculated annual saving', value: fmtMoney(savings), highlight: true },
         { note: currentCost < 400 ? `Your current running cost is quite low, so even a large percentage saving translates to a modest dollar saving — this is why the payback can look long despite a genuinely efficient upgrade. The percentage improvement is real; it's just working on a small base.` : null }
@@ -1209,7 +1309,7 @@ function calculate(inp){
   const CONFIDENCE = {
     solar: inp.bill > 500 ? 'high' : 'medium',
     battery: inp.hasBattery ? 'high' : 'medium',
-    hotwater: 'high'
+    hotwater: 'medium'
   };
   const CONFIDENCE_NOTE = {
     solar: inp.bill > 500 ? 'Based on your actual annual bill.' : 'Bill seems low or unset — estimate is rougher than usual.',
@@ -1253,7 +1353,7 @@ function calculate(inp){
     spent += o.cost;
   });
 
-  return { ranked, delayed, spent, hotWaterAlreadyEfficient: inp.hotWater === 'heatpump' };
+  return { ranked, delayed, spent, hotWaterAlreadyEfficient: inp.hotWater === 'heatpump', hotWaterNote };
 }
 
 function render(){
@@ -1261,7 +1361,7 @@ function render(){
   $('solarSizeField').style.display = inp.hasSolar ? 'block' : 'none';
   $('actualBatterySavingField').style.display = inp.hasBattery ? 'block' : 'none';
 
-  const { ranked, delayed, spent, hotWaterAlreadyEfficient } = calculate(inp);
+  const { ranked, delayed, spent, hotWaterAlreadyEfficient, hotWaterNote } = calculate(inp);
 
   $('budgetReadout').textContent = fmtMoney(inp.budget);
   $('spentReadout').textContent = fmtMoney(Math.min(spent, inp.budget));
@@ -1291,7 +1391,7 @@ function render(){
           <p class="card-title">Priority ${i+1} — ${ICON[o.id] || ''} ${o.name}</p>
           <p class="card-sub">${o.sub}</p>
         </div>
-        <span class="tag ${o.overBudget ? 'queued' : 'priority'}">${o.overBudget ? 'Over budget — next in queue' : 'Highest priority under your assumptions'}</span>
+        ${o.overBudget ? '<span class="tag queued">Over budget — next in queue</span>' : ''}
       </div>
       <div class="metrics">
         <div class="metric"><div class="k">Cost</div><div class="v">${fmtMoney(o.cost)}</div></div>
@@ -1315,6 +1415,13 @@ function render(){
     note.className = 'empty';
     note.style.marginTop = '16px';
     note.textContent = 'Hot water: already a heat pump — no action needed here.';
+    delaySection.appendChild(note);
+  }
+  if(hotWaterNote && hotWaterNote.skipped){
+    const note = document.createElement('div');
+    note.className = 'empty';
+    note.style.marginTop = '16px';
+    note.textContent = 'Hot water: ' + hotWaterNote.reason;
     delaySection.appendChild(note);
   }
   delayed.forEach(o => {
